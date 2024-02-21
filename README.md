@@ -1,4 +1,4 @@
 # hello-world
 This repository is for practicing the GitHub Flow
 
-This is an exercise for my Physic´s and Engine Simulation Course at Loyola!
+This is an exercise for my Physic´s and Engine Simulations Course at Loyola! My name is David H. Duque
