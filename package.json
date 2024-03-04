@@ -1,0 +1,13 @@
+{
+    "name": "dream-engine-studio",
+    "description": "My new Game",
+    "authors": ["Kidest Suarez", "Jaime Lopez", "Pablo Jimenez", "David Duque"],
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "vite"
+    },
+    "dependencies": {
+        "three": "^0.161.0",
+        "vite": "^5.1.4"
+    }
+}
