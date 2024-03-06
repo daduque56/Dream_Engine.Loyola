@@ -27,6 +27,5 @@ function frame (){
 
     last = now
     requestAnimationFrame(frame)
-
-    frame()
 }
+    frame()
