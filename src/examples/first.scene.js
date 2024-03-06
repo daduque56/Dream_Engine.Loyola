@@ -22,8 +22,17 @@ const material = new THREE.MeshBasicMaterial()
 const triangle = new THREE.Mesh(geometry, material)
 scene.add(triangle)
 
+const camera = new THREE.OrthographicCamera(
+    -sizes.width,
+    sizes.width,
+    sizes.height,
+    -sizes.height
+
+);
+camera.position.z = 25
+scene.add(camera)
+
 const renderer = new THREE.WebGL1Renderer();
 renderer.setSize(sizes.width, sizes.width)
 document.body.appendChild(renderer.domElement);
 renderer.render(scene, camera)
-
