@@ -14,35 +14,37 @@ let last = Date.now()
 let now = Date.now()
 let dt = 0 
 
-frame()
-
-function sleep (millisecndos){
+function sleep (milliseconds){
     const date = Date.now();
     let currentDate = null;
-    do{
+    do {
         currentDate = Date.now();  
-    }
-    while (currentDate - date < millisecndos);
+    } while (currentDate - date < milliseconds);
+}
 
-    function frame(){
+frame()
+
+    function frame()
+    {
         now = Date.now()
-        const dt = (now - late) / 1000
-
-        const time_To_Wait = FIXED_TIME_STEP - dt
-        if (time_To_Wait > 0 && time_To_Wait <= FIXED_TIME_STEP) {
+        const dt = (now - last) / 1000
+        const time_to_Wait = FIXED_TIME_STEP - dt
+        if (time_to_Wait > 0 && time_to_Wait <= FIXED_TIME_STEP) 
+        {
             logger.info ("Waiting.")
-            sleep(time_To_Wait * 1000)
+            sleep(time_to_Wait * 1000)
         }
-        if (time_To_Wait < 0)
-            logger.error('I am late ' + time_To_Wait + 'ms.')
-
+    }
+// Uncaught reference error: time_To_Wait is not defined
+   // if (time_to_Wait < 0)
+         //   logger.error('I am late ' + time_to_Wait + 'ms.')
+// Only commenting lines 39 and 40 our console.log give us that player.position = 10 when loop runs 
         player.position +=  player.speed
-        if (player.speed > 100)
+
+    if (player.speed > 100)
             player.position = 0
 
         logger.info('Player position: ' + player.position)
 
         last = now
         requestAnimationFrame(frame);
-    }
-}
