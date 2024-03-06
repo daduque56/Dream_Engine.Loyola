@@ -17,7 +17,7 @@ const geometry = new THREE.BufferGeometry()
 const positionAttribute = new THREE.BufferAttribute(triangleVertices, 3)
 geometry.setAttribute('position',positionAttribute)
 
-const material = new THREE.MeshBasicMaterial()
+const material = new THREE.MeshBasicMaterial( { color: 0x6AB7D5 })
 
 const triangle = new THREE.Mesh(geometry, material)
 scene.add(triangle)
@@ -31,7 +31,7 @@ const camera = new THREE.OrthographicCamera(
 );
 camera.position.z = 25
 scene.add(camera)
-
+// THREE.WebGL1Renderer: WebGL 1 support  was deprectaed in first.scene:35 r153 and will be removed in r163
 const renderer = new THREE.WebGL1Renderer();
 renderer.setSize(sizes.width, sizes.width)
 document.body.appendChild(renderer.domElement);
