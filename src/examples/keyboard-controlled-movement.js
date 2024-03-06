@@ -9,7 +9,7 @@ const player = {
         y: 0
     }
 }
-
+//Uncaught SyntaxError: Identifier 'Dream_Engine' has already been declared (at keyboard-controlled-movement.js:12:7)
 const Dream_Engine = new Dream_Engine()
 
 Dream_Engine.update = (dt) => {
