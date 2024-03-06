@@ -1,5 +1,4 @@
 import Dream_Engine from "../dream_Engine/Dream_Engine";
-import Dream_Engine from "../dream_Engine/Dream_Engine";
 
 const worldWidth = 100
 const player = {
