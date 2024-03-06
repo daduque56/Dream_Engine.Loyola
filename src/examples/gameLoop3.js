@@ -15,17 +15,22 @@ function frame (){
     const dt = (now - last) / 1000
 
     player.position += player.speed * dt
+    // 1. Revisar constantemente que cuando la posición del jugador llegue a 100 avise que esta re setteando su posición 
+    if(player.position > 100){
+        player.position = 0
+    }
+        // 2. re settear la posición a 0
     if(player.position > 100)
         player.position = 0
-
-    Logger.info(
-        "d:"
+    // 3. Mostrar el primer dt en 0
+    logger.info(
+        "d: "
         + dt
-        + "Player position: "
-        + player.position
+        + " Player position: "
+        + player.position   
     )
-
     last = now
-    requestAnimationFrame(frame)
+    requestAnimationFrame(frame)    
 }
-    frame()
+
+frame()
