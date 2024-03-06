@@ -4,7 +4,7 @@ const color1 = new THREE.Color();
 
 const color2 = new THREE.Color( 0xff0000 );
 
-const color3 = new THREE.Color("rgb(0, 255, 0");
+const color3 = new THREE.Color("rgb(0, 255, 255");
 const color4 = new THREE.Color("rgb(100%, 0%, 0%)");
 
 const color5 = new THREE.Color('Skyblue');
