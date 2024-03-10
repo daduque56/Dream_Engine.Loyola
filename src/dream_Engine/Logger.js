@@ -5,18 +5,15 @@ export default class Logger {
 
     }
 
-    info(message) 
-    {
+    info(message) {
     this.log("INF", message, "color: green;")
     }
         
-    error(message) 
-    {
+    error(message) {
         this.log("ERR", message, "color: red;")
     }
     
-    debug(message)
-    {
+    debug(message) {
         this.log("DEB", message, "color: blue;")
     }
         
