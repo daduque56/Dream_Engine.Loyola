@@ -15,12 +15,12 @@ geometry.setAttribute('positions', positionAttribute)
 
 const material = new THREE.MeshBasicMaterial()
 const triangle  = new THREE.Mesh(geometry,material)
-dream_Engine.scene.add(triangle)
+dream_Engine.scene.add(triangle);
 
 dream_Engine.start()
 
 dream_Engine.update = (dt) => {
-    const time = dream_Engine.totalElapsedInSeconds
+    const time = Dream_Engine.totalElapsedInSeconds
     triangle.position.x = Math.sin(time) * 600
     triangle.position.y = Math.cos(time) * 600
 }

@@ -1,7 +1,7 @@
 import Dream_Engine from "../dream_Engine/Dream_Engine";
 
 const collisionEvent = new  Event ("colissionEvent")
-window.addEventListener("collisonEvent", collisionHandler)
+window.addEventListener("collisionEvent", collisionHandler)
 function collisionHandler (colissionEvent) {
     console.log("Resetting the position of the player")
     player.postion.x = 0
@@ -15,8 +15,8 @@ const player = {
         y: 0
     }
 }
-// Uncaught SyntaxError> Identifier 'Dream_Engine' has already been declared  at custom-Event.js:19:7
-const Dream_Engine = new Dream_Engine()
+
+const dream_Engine = new Dream_Engine()
 
 Dream_Engine.update = (dt) => {
     Dream_Engine.logger.debug(player.postion.x)
@@ -27,4 +27,4 @@ Dream_Engine.update = (dt) => {
     }
 }
 
-Dream_Engine.start()
+dream_Engine.start()
