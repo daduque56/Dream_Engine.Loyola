@@ -1,23 +1,26 @@
 import { EventDispatcher } from "three";
 
+
 export default class  Window extends  EventDispatcher{
     constructor (Dream_Engine){
-        super ()
+        super();
 
-        this.logger = Dream_Engine.logger
-        this.logger.info("Sizes constructor called")
-        this.width = window.innerWidth
-        this.height = window.innerHeight
-        this.aspectRatio = this.width / this.height
-        this.devicePixelRatio = Math.min (window.devicePixelRatio, 2)
+         this.logger = Dream_Engine.logger
+         this.logger.info("Sizes constructor called")
+         this.width = window.innerWidth
+         this.height = window.innerHeight
+         this.aspectRatio = this.width / this.height
+         this.devicePixelRatio = Math.min (window.devicePixelRatio, 2)
 
-        window.addEventListener('Resize', () => {
+         window.addEventListener('resize', () => {
             this.width = window.innerWidth
-        this.height = window.innerHeight
-        this.aspectRatio = Math.min (window.devicePixelRatio, 2)
+         this.height = window.innerHeight
+         this.aspectRatio = Math.min (window.devicePixelRatio, 2)
 
-        this.dispatchEvent ({
+         this.dispatchEvent ({
+
             type: 'resize'
+            
              })
         })
     }
