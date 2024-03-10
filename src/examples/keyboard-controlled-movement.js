@@ -1,6 +1,5 @@
 import Dream_Engine from "../dream_Engine/Dream_Engine";
 
-const worldWidth = 100
 const player = {
     speed: 10,
     position: {
@@ -8,28 +7,34 @@ const player = {
         y: 0
     }
 }
-//Uncaught SyntaxError: Identifier 'Dream_Engine' has already been declared (at keyboard-controlled-movement.js:12:7)
-const Dream_Engine = new Dream_Engine()
 
-Dream_Engine.update = (dt) => {
+const dream_Engine = new Dream_Engine()
+
+dream_Engine.update = (dt) => {
     console.log (player.position)
+    dream_Engine.handleArrowKeyInput(dt);
+}
 
-    if (Dream_Engine.input.isKeyPressed('Arrow right')) 
-    {
-        player.position.x += player.speed * dt
-    }
-    if (Dream_Engine.input.isKeyPressed('ArrowLeft')) 
-    {
-        player.position.x -= player.speed * dt
-    }
-    if (Dream_Engine.input.isKeyPressed('ArrowUp'))
-    {
-        player.position.x += player.speed * dt
-    }
-    if (Dream_Engine.input.isKeyPressed('ArrowDown'))
-    {
-        player.position.x -= player.speed * dt
+dream_Engine.handleArrowKeyInput = (dt) => {
+    if (dream_Engine.input.areArrowKeysPressed()) {
+        if (dream_Engine.input.isKeyPressed('ArrowRight')){
+            player.position.x  += player.speed * dt;
+            console.log("Player moved to the right")
+        }
+        if (dream_Engine.input.isKeyPressed('ArrowUp')){
+            player.position.x  += player.speed * dt;
+            console.log("Player moved up")
+        }
+        if (dream_Engine.input.isKeyPressed('ArrowLeft')){
+            player.position.y  -= player.speed * dt;
+            console.log("Player moved to the left")
+        }
+        if (dream_Engine.input.isKeyPressed('ArrowDown')){
+            player.position.y  -= player.speed * dt;
+            console.log("Player moved down")
+        }
     }
 }
 
-Dream_Engine.start()
+dream_Engine.start()
+    

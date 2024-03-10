@@ -35,10 +35,10 @@ frame()
             sleep(time_to_Wait * 1000)
         }
     }
-// Uncaught reference error: time_To_Wait is not defined
-   // if (time_to_Wait < 0)
-         //   logger.error('I am late ' + time_to_Wait + 'ms.')
-// Only commenting lines 39 and 40 our console.log give us that player.position = 10 when loop runs 
+
+    //if (time_to_Wait < 0)
+       //     logger.error('I am late ' + time_to_Wait + 'ms.')
+
         player.position +=  player.speed
 
     if (player.speed > 100)
