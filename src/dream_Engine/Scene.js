@@ -1,11 +1,9 @@
-import { Object3D } from '../core/Object3D.js';
-import { Euler } from '../math/Euler.js';
+//import { Object3D } from '../core/Object3D.js';
+//import { Euler } from '../math/Euler.js';
 
-class Scene extends Object3D {
+class Scene  {
 
 	constructor() {
-
-		super();
 
 		this.isScene = true;
 
@@ -17,8 +15,8 @@ class Scene extends Object3D {
 
 		this.backgroundBlurriness = 0;
 		this.backgroundIntensity = 1;
-		this.backgroundRotation = new Euler();
-		this.environmentRotation = new Euler();
+		//this.backgroundRotation = new Euler();
+		//this.environmentRotation = new Euler();
 
 		this.overrideMaterial = null;
 
@@ -40,8 +38,8 @@ class Scene extends Object3D {
 
 		this.backgroundBlurriness = source.backgroundBlurriness;
 		this.backgroundIntensity = source.backgroundIntensity;
-		this.backgroundRotation.copy( source.backgroundRotation );
-		this.environmentRotation.copy( source.environmentRotation );
+		//this.backgroundRotation.copy( source.backgroundRotation );
+		//this.environmentRotation.copy( source.environmentRotation );
 
 		if ( source.overrideMaterial !== null ) this.overrideMaterial = source.overrideMaterial.clone();
 
@@ -59,11 +57,13 @@ class Scene extends Object3D {
 		if ( this.backgroundBlurriness > 0 ) data.object.backgroundBlurriness = this.backgroundBlurriness;
 		if ( this.backgroundIntensity !== 1 ) data.object.backgroundIntensity = this.backgroundIntensity;
 
-		data.object.backgroundRotation = this.backgroundRotation.toArray();
-		data.object.environmentRotation = this.environmentRotation.toArray();
+		//data.object.backgroundRotation = this.backgroundRotation.toArray();
+		//data.object.environmentRotation = this.environmentRotation.toArray();
 
 		return data;
 
 	}
 
 }
+
+export { Scene };
