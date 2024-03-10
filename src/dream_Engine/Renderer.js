@@ -8,7 +8,7 @@ export default class  Renderer{
         this.scene = Dream_Engine.scene
         this.camera = Dream_Engine.camera
 
-        this,instance  = new THREE.WebGL1Renderer()
+        this.instance  = new THREE.WebGL1Renderer()
         document.body.appendChild(this.instance.domElement)
         this.instance.setSize(
             this.window.width,
