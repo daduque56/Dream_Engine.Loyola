@@ -2,12 +2,12 @@ import * as THREE from 'three'
 
 export default class Camera
 {
-    constructor (Dream_Engine)
+    constructor (scene, Dream_Engine)
     {
-        this.logger = Dream_Engine.logger
+        this.logger = Dream_Engine.log
         this.logger.info("Camera constructor called")
         this.window = Dream_Engine.window
-        this.scene = Dream_Engine.scene
+        this.scene = scene;
 
         this.instance = new THREE.OrthographicCamera(
             -this.window.width,
