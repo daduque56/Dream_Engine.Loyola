@@ -7,6 +7,8 @@ import { Scene } from "./Scene";
 
 class Dream_Engine {
     constructor() {
+
+        // HELLO 
         
         this.logger = new Logger()
         this.logger.info('Dream_Engine constructor called')
