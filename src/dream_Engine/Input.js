@@ -23,6 +23,13 @@ export default class Input {
         window.addEventListener('keydown', (event) => this.handleKeyDown(event));
         window.addEventListener('keyup', (event) => this.handleKeyUp(event));
 
+        window.addEventListener('mousedown', (event) => {
+
+            if (event.button === 0) {
+                console.log("User has fired a bullet");
+            }
+        });
+
         this.arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Escape', 'KeyR', 'KeyE', 'KeyF'];
     }
 

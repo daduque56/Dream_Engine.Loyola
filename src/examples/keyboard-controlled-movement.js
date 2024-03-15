@@ -43,7 +43,7 @@ dream_Engine.handleArrowKeyInput = (dt) => {
             console.log("Player is interacting")
         }
         if (dream_Engine.input.isKeyPressed('KeyF')){
-            console.log("Player is firing a weapon")
+            console.log("Player is using an ability")
         }
         if (dream_Engine.input.isKeyPressed('Escape')){
             console.log("Player paused the game")
