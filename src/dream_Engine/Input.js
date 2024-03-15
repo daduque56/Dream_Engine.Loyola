@@ -23,15 +23,15 @@ export default class Input {
         window.addEventListener('keydown', (event) => this.handleKeyDown(event));
         window.addEventListener('keyup', (event) => this.handleKeyUp(event));
 
-        this.arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+        this.arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Escape', 'KeyR', 'KeyE', 'KeyF'];
     }
 
     handleKeyDown(event) {
-        this.keys[event.key] = true;
+        this.keys[event.code] = true;
     }
 
     handleKeyUp(event) {
-        this.keys[event.key] = false;
+        this.keys[event.code] = false;
     }
 
     isKeyPressed(key) {
