@@ -41,24 +41,5 @@ export default class Input {
     areArrowKeysPressed() {
         return this.arrowKeys.some(key => this.isKeyPressed(key));
     }
- 
-      /*this.pressedKeys = {}
-
-        window.addEventListener(
-            "keydown",
-            (event) => {
-                this._setKeyValue(event.key, true)
-            }
-        )
-    }
-    _setKeyValue(key, value)
-    {
-        this.pressedKeys [key] = true
-    }
-
-    isKeyPressed(key)
-    {
-        return this.pressedKeys [keys]*/
-
 }
 
