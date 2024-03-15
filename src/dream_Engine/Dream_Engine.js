@@ -1,3 +1,4 @@
+//import Stats from "stats.js";
 import Input from "./Input";
 import Logger from "./Logger";
 import Renderer from "./Renderer";
@@ -22,27 +23,23 @@ class Dream_Engine {
         this.aspectRatio =  1;
 
         this.input = new Input(this);
-        this.window = new Window(this.scene, this.window);
         this.scene = new Scene;
+        this.window = new Window(this);
+        this.camera = new Camera(this.scene, this);
         this.renderer = new Renderer(this,this.scene);
-        this.camera = new Camera(this.scene, this.window);
         
-        
+        //this.stats = new Stats();
+        //this.stats.showPanel(0);
+
+       // document.body.appendChild(this.stats.dom);
 
         this.update = (dt) => {
             this.handleArrowKeyInput(dt);
         };
     }
-
-    start () {
-
-        this.isRunning = true;
-        this.logger.info('Dream_Engine starts');
-       
-        this.frame()
-    }
-
-    frame (){
+frame (){
+        //this.debug.stats.begin()
+        
         window.requestAnimationFrame(() => {
             this.frame()
         })
@@ -56,9 +53,21 @@ class Dream_Engine {
         this.update(this.dt)
         
         this.renderer.frame()
+        //this.debug.stats.end()
     }
+   
+    start () {
 
-    handleArrowKeyInput() {
+        this.isRunning = true;
+        this.logger.info('Dream_Engine starts');
+       
+        this.frame()
+    }
+    stop () {
+        this.isRunning = false;
+        this.logger.info('Dream_Engine stops');
+    }
+    handleArrowKeyInput(dt) {
         if (this.input.areArrowKeysPressed(dt)) {
             if (this.input.isKeyPressed('ArrowRight')) {
 

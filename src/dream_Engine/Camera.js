@@ -4,7 +4,7 @@ export default class Camera
 {
     constructor (scene, Dream_Engine)
     {
-        this.logger = Dream_Engine.log
+        this.logger = Dream_Engine.logger
         this.logger.info("Camera constructor called")
         this.window = Dream_Engine.window
         this.scene = scene;

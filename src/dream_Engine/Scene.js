@@ -1,6 +1,6 @@
-//import { Object3D } from '../core/Object3D.js';
+// import { Object3D } from '../core/Object3D.js';
 //import { Euler } from '../math/Euler.js';
-
+import * as THREE from 'three';
 class Scene  {
 
 	constructor() {
@@ -23,9 +23,13 @@ class Scene  {
 		if ( typeof __THREE_DEVTOOLS__ !== 'undefined' ) {
 
 			__THREE_DEVTOOLS__.dispatchEvent( new CustomEvent( 'observe', { detail: this } ) );
-
 		}
 
+		this.instance = new THREE.Scene();
+	}
+
+	add( object ) {
+		this.instance.add(object);
 	}
 
 	copy( source, recursive ) {

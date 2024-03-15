@@ -5,8 +5,8 @@ export default class  Renderer{
         this.logger = Dream_Engine.logger
         this.logger.info("Renderer constructor called")
         this.window = Dream_Engine.window
-        this.scene = Dream_Engine.scene
-        this.camera = Dream_Engine.camera
+        this.scene = Dream_Engine.scene.instance
+        this.camera = Dream_Engine.camera.instance
 
         this.instance  = new THREE.WebGL1Renderer()
         document.body.appendChild(this.instance.domElement)
@@ -28,7 +28,7 @@ export default class  Renderer{
     frame(){
         this.instance.render(
             this.scene,
-            this.camera.instance
+            this.camera
         )
     }
 }
