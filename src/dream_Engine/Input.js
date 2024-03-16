@@ -19,6 +19,7 @@ export default class Input {
         this.logger = Dream_Engine.logger
         this.logger.info('Input constructor called')
 
+
         this.keys = {};
         window.addEventListener('keydown', (event) => this.handleKeyDown(event));
         window.addEventListener('keyup', (event) => this.handleKeyUp(event));
@@ -30,7 +31,19 @@ export default class Input {
             }
         });
 
-        this.arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Escape', 'KeyR', 'KeyE', 'KeyF'];
+        this.arrowKeys = ['ArrowUp',
+                          'ArrowDown',
+                          'ArrowLeft',
+                          'ArrowRight', 
+                          'Space', 
+                          'Escape', 
+                          'KeyR', 
+                          'KeyE', 
+                          'KeyF',
+                          'KeyW',
+                          'KeyA',
+                          'KeyS',
+                          'KeyD'];
     }
 
     handleKeyDown(event) {

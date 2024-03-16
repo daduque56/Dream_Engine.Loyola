@@ -8,6 +8,12 @@ const player = {
     }
 }
 
+window.addEventListener('mousemove', mouseMoveHandler)
+
+function mouseMoveHandler (event) {
+    console.log(event)
+}
+
 const dream_Engine = new Dream_Engine()
 
 dream_Engine.update = (dt) => {
@@ -32,6 +38,21 @@ dream_Engine.handleArrowKeyInput = (dt) => {
         if (dream_Engine.input.isKeyPressed('ArrowDown')){
             player.position.y  -= player.speed * dt;
             console.log("Player moved down")
+        if (dream_Engine.input.isKeyPressed('KeyD')){
+            player.position.x  += player.speed * dt;
+            console.log("Player moved to the right")
+        }
+        if (dream_Engine.input.isKeyPressed('KeyW')){
+             player.position.y  += player.speed * dt;
+             console.log("Player moved up")
+        }
+        if (dream_Engine.input.isKeyPressed('KeyA')){
+             player.position.x  -= player.speed * dt;
+             console.log("Player moved to the left")
+        }
+        if (dream_Engine.input.isKeyPressed('KeyS')){
+            player.position.y  -= player.speed * dt;
+            console.log("Player moved down")
         }
         if (dream_Engine.input.isKeyPressed('Space')){
             console.log("Player jumped")
@@ -49,7 +70,7 @@ dream_Engine.handleArrowKeyInput = (dt) => {
             console.log("Player paused the game")
         }
     }
+    }   
 }
-
 dream_Engine.start()
     
