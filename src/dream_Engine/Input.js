@@ -24,12 +24,39 @@ export default class Input {
         window.addEventListener('keydown', (event) => this.handleKeyDown(event));
         window.addEventListener('keyup', (event) => this.handleKeyUp(event));
 
-        window.addEventListener('mousedown', (event) => {
+        let rightMouseDown = false;
+        let leftMouseDown = false;
 
-            if (event.button === 0) {
-                console.log("User has fired a bullet");
+        window.addEventListener('contextmenu', (event) => {
+            event.preventDefault(); 
+        });
+
+        window.addEventListener('mouseup', (event) => {
+            if (event.button === 2) { 
+                rightMouseDown = false;
+                console.log("Right mouse button released");
+            } else if (event.button === 0) { 
+                leftMouseDown = false;
+                console.log("Left mouse button released");
             }
         });
+
+        window.addEventListener('mousedown', (event) => {
+            if (event.button === 2) { 
+                rightMouseDown = true;
+            } else if (event.button === 0) { 
+                leftMouseDown = true;
+            }
+        });
+
+        setInterval(() => {
+            if (rightMouseDown) {
+                console.log("Right mouse button is being pressed");
+            }
+            if (leftMouseDown) {
+                console.log("Left mouse button is being pressed");
+            }
+        }, 100);
 
         this.arrowKeys = ['ArrowUp',
                           'ArrowDown',
