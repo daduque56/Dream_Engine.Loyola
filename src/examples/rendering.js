@@ -10,7 +10,7 @@ const triangleVertices = new Float32Array([
 ]);
 
 // Set the camera position
-dream_Engine.camera.position = 500;
+dream_Engine.camera.position = 100;
 
 const geometry  = new THREE.BufferGeometry()
 const positionAttribute = new THREE.BufferAttribute (triangleVertices,3)
@@ -24,6 +24,6 @@ dream_Engine.start()
 
 dream_Engine.update = (dt) => {
     const time = dream_Engine.totalElapsedInSeconds
-    triangle.position.x = Math.sin(time) * 600
-    triangle.position.y = Math.cos(time) * 600
+    triangle.position.x = Math.sin(time) * 250
+    triangle.position.y = Math.cos(time) * 550
 }
