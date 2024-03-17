@@ -88,6 +88,9 @@ dream_Engine.handleArrowKeyInput = (dt) => {
         if (dream_Engine.input.isKeyPressed('Escape')){
             console.log("---->> Player paused the game <<----")
         }
+        if (dream_Engine.input.isKeyPressed('Shift')){
+            console.log("---->> Player is sprinting <<----")
+        }
     }
 }
 
