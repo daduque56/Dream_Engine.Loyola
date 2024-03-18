@@ -5,6 +5,7 @@ import Renderer from "./Renderer";
 import Window from "./Window";
 import Camera from "./Camera";
 import { Scene } from "./Scene";
+import Mesh from "./Mesh";
 
 class Dream_Engine {
     constructor() {
@@ -27,6 +28,7 @@ class Dream_Engine {
         this.window = new Window(this);
         this.camera = new Camera(this.scene, this);
         this.renderer = new Renderer(this,this.scene);
+        this.Mesh = new Mesh(this);
         
         //this.stats = new Stats();
         //this.stats.showPanel(0);
