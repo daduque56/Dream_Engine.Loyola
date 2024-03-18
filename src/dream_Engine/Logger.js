@@ -16,5 +16,9 @@ export default class Logger {
     debug(message) {
         this.log("DEB", message, "color: blue;")
     }
+
+    points(message) {
+        this.log("PTS", message, "color: yellow;")
+    }
         
 }
