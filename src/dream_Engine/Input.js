@@ -73,7 +73,8 @@ export default class Input {
                           'ArrowRight', 
                           'Space', 
                           'Escape',
-                          'Shift', 
+                          'Shift',
+                          'Enter', 
                           'KeyR', 
                           'KeyE', 
                           'KeyF',
@@ -117,6 +118,9 @@ export default class Input {
         }
         if (event.code === 'Shift') {
             console.log('The Shift key was pressed');
+        }
+        if (event.code === 'Enter') {
+            console.log('The Enter key was pressed');
         }
         if (event.code === 'KeyR') {
             console.log('The KeyR key was pressed');
@@ -167,6 +171,9 @@ export default class Input {
         if (event.code === 'Shift') {
             console.log('The Shift key was released');
         }   
+        if (event.code === 'Enter') {
+            console.log('The Enter key was released');
+        }
         if (event.code === 'KeyR') {
             console.log('The KeyR key was released');
         }   
