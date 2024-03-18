@@ -9,14 +9,18 @@ export default class Camera
         this.window = Dream_Engine.window
         this.scene = scene;
 
-        this.instance = new THREE.OrthographicCamera(
+        /*this.instance = new THREE.OrthographicCamera(
             -this.window.width,
             this.window.width,
             this.window.height,
             -this.window.height,
-        )
-        this.instance.position.set(0, 0, 125)
+        )*/
+        
+        this.instance = new THREE.PerspectiveCamera(45, this.window.aspectRatio, 1, 1000)
+
         this.scene.add(this.instance)
+
+        this.instance.position.set(100, 100, 125);
     }
 
     resize()
