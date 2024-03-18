@@ -9,6 +9,7 @@ export default class Mesh {
 
     CreateFromVertices (vertices, color) {
         const geometry = new THREE.BufferGeometry();
+
         const positionAttribute = new THREE.BufferAttribute(vertices, 3);
         geometry.setAttribute('position', positionAttribute);
         const material = new THREE.MeshBasicMaterial({ color: color });
@@ -17,8 +18,8 @@ export default class Mesh {
     
         return mesh;
     }
-    CreateFromGeometry (geometry, color) {
-        const material = new THREE.MeshBasicMaterial({ color: color });
+    CreateFromGeometry (geometry, material) {
+       
         const mesh = new THREE.Mesh(geometry, material);
         this.scene.add(mesh);
     

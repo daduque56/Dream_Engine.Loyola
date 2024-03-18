@@ -31,6 +31,8 @@ const boxMesh = dream_Engine.Mesh.CreateFromGeometry(
     torusMesh.position.x = 400      
     torusMesh.position.y = -400
 
+
+
     dream_Engine.update = (dt) => {
         boxMesh.rotateZ(dt)
         capsuleMesh.rotateZ(dt)
@@ -42,6 +44,6 @@ const boxMesh = dream_Engine.Mesh.CreateFromGeometry(
         sphereMesh.rotation.y += 100 * dt
         torusMesh.rotation.z += 100 * dt
         */
-    };
+    }
 
     dream_Engine.start()
