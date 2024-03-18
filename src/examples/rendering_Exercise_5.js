@@ -49,6 +49,7 @@ dream_Engine.logger.debug('Instrucciones:')
 dream_Engine.logger.info('----------------------------------------')
 dream_Engine.logger.debug('Usa las teclas W, A, S, D para mover a PacMan')
 dream_Engine.logger.debug('Usa las teclas Q, E para rotar a PacMan')
+dream_Engine.logger.debug('Oprime Enter para pausar el juego')
 dream_Engine.logger.debug('Oprime F5 para reiniciar el juego cuando no haya mas puntos en pantalla')
 dream_Engine.logger.debug('Si sales de los limites del mundo, PacMan morira')
 dream_Engine.logger.debug('Si un enemigo toca a PacMan tambien morira')
@@ -68,7 +69,7 @@ dream_Engine.update = (dt) => {
     PacManBox.setFromObject(pentagon);
 
     // Pausar el juego
-    if (dream_Engine.input.isKeyPressed('Escape')) {
+    if (dream_Engine.input.isKeyPressed('Enter')) {
         pausa = true;
         for (let i = 0; i < enemigos.length; i++) {
             enemigos[i].material.color.set(colorPausaEnemigos);
