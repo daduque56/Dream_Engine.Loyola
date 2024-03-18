@@ -25,7 +25,7 @@ const boxMesh = dream_Engine.Mesh.CreateFromGeometry(
     sphereMesh.position.y = 400 
 
     const torusMesh = dream_Engine.Mesh.CreateFromGeometry(
-        new THREE.TorusGeometry(100, 40, 16, 100), 
+        new THREE.TorusKnotGeometry(200, 60, 50, 30), 
         new THREE.MeshBasicMaterial({ color: 'lightgreen', wireframe: true })
     )
     torusMesh.position.x = 400      
@@ -34,10 +34,11 @@ const boxMesh = dream_Engine.Mesh.CreateFromGeometry(
 
 
     dream_Engine.update = (dt) => {
-        boxMesh.rotateZ(dt)
+        boxMesh.rotateX(dt)
         capsuleMesh.rotateZ(dt)
         sphereMesh.rotateZ(dt)
-        torusMesh.rotateZ(dt)
+        torusMesh.rotateY(dt)
+        torusMesh.rotateX(dt)
         /*
         boxMesh.rotation.z += 100 * dt
         capsuleMesh.rotation.y += 100 * dt
