@@ -9,6 +9,7 @@ export default class Camera
         this.window = Dream_Engine.window
         this.scene = scene;
 
+        // PacMan Orthographic example camera
         /*this.instance = new THREE.OrthographicCamera(
             -this.window.width,
             this.window.width,
@@ -16,11 +17,12 @@ export default class Camera
             -this.window.height,
         )*/
         
+        // Isometric example camera
         this.instance = new THREE.PerspectiveCamera(45, this.window.aspectRatio, 1, 1000)
 
         this.scene.add(this.instance)
 
-        this.instance.position.set(100, 100, 125);
+        this.instance.position.set(125, 125, 125);
     }
 
     resize()
