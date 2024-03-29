@@ -10,19 +10,19 @@ export default class Camera
         this.scene = scene;
 
         // PacMan Orthographic example camera
-        /*this.instance = new THREE.OrthographicCamera(
+        this.instance = new THREE.OrthographicCamera(
             -this.window.width,
             this.window.width,
             this.window.height,
             -this.window.height,
-        )*/
+        )
         
-        // Isometric example camera
+        /* Isometric example camera
         this.instance = new THREE.PerspectiveCamera(45, this.window.aspectRatio, 1, 1000)
 
         this.scene.add(this.instance)
 
-        this.instance.position.set(125, 125, 125);
+        this.instance.position.set(125, 125, 125);*/
     }
 
     resize()
