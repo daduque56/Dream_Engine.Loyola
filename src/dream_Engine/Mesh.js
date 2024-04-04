@@ -30,6 +30,30 @@ export default class Mesh {
         const axesHelper = new THREE.AxesHelper(30);
         this.scene.add(axesHelper);
         return axesHelper;
-        }
+    }
+
+    CreateGridHelper () {
+
+        const size = 10;
+        const divisions = 10;
+        const color1 = 0x0000ff;
+        const color2 = 0x00ff00;
+
+        const gridHelper = new THREE.GridHelper(size, divisions, color1, color2);
+        this.scene.add(gridHelper);
+        return gridHelper;
+    }
+
+    CreateArrowHelper () {
+        const dir = new THREE.Vector3(1, 1, 1);
+
+        const origin = new THREE.Vector3(0, 0, 0);
+        const length = 1;
+        const hex = 0xffff00;
+
+        const arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+        this.scene.add(arrowHelper);
+        return arrowHelper;
+    }   
 }
 
