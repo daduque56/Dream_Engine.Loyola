@@ -27,29 +27,24 @@ export default class Mesh {
 
     CreateAxesHelper () 
     {
-        const axesHelper = new THREE.AxesHelper(30);
+        const axesHelper = new THREE.AxesHelper(20);
         this.scene.add(axesHelper);
         return axesHelper;
     }
 
     CreateGridHelper () {
 
-        const size = 10;
-        const divisions = 10;
+        const size = 200;
+        const divisions = 15;
         const color1 = 0x0000ff;
-        const color2 = 0x00ff00;
+        const color2 = 0x000000;
 
         const gridHelper = new THREE.GridHelper(size, divisions, color1, color2);
         this.scene.add(gridHelper);
         return gridHelper;
     }
 
-    CreateArrowHelper () {
-        const dir = new THREE.Vector3(1, 1, 1);
-
-        const origin = new THREE.Vector3(0, 0, 0);
-        const length = 1;
-        const hex = 0xffff00;
+    CreateArrowHelper ( dir, origin, length, hex) {
 
         const arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
         this.scene.add(arrowHelper);
