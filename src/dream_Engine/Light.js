@@ -26,5 +26,12 @@ export default class Light {
         this.scene.add(light)
         return light
     }   
-    
+
+    CreateLightHelper(Light){
+        const light = new THREE.LightHelper(Light)
+        const helper = new THREE.DirectionalLightHelper(Light, 5)
+        this.scene.add(helper)
+        return helper
+
+    }
 }
