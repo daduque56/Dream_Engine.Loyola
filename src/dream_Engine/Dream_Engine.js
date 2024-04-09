@@ -6,6 +6,8 @@ import Window from "./Window";
 import Camera from "./Camera";
 import { Scene } from "./Scene";
 import Mesh from "./Mesh";
+import Light from "./Light";
+import OrbitControls from "./OrbitControls";
 
 class Dream_Engine {
     constructor() {
@@ -29,7 +31,9 @@ class Dream_Engine {
         this.camera = new Camera(this.scene, this);
         this.renderer = new Renderer(this,this.scene);
         this.Mesh = new Mesh(this);
-        
+        this.Light = new Light(this);
+        this.OrbitControls = new OrbitControls(this);
+
         //this.stats = new Stats();
         //this.stats.showPanel(0);
 
