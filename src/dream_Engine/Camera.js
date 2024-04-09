@@ -19,9 +19,7 @@ export default class Camera
         
         // Isometric example camera
         this.instance = new THREE.PerspectiveCamera(45, this.window.aspectRatio, 1, 1000)
-
         this.scene.add(this.instance)
-
         this.instance.position.set(125, 125, 125);
     }
 
