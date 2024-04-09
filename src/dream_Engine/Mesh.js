@@ -32,12 +32,7 @@ export default class Mesh {
         return axesHelper;
     }
 
-    CreateGridHelper () {
-
-        const size = 200;
-        const divisions = 15;
-        const color1 = 0x0000ff;
-        const color2 = 0x000000;
+    CreateGridHelper (size, divisions, color1, color2) {    
 
         const gridHelper = new THREE.GridHelper(size, divisions, color1, color2);
         this.scene.add(gridHelper);
