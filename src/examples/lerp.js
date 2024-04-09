@@ -5,6 +5,7 @@ const dream_Engine = new Dream_Engine()
 dream_Engine.camera.instance.position.set(3, 7, 18)
 
 const gridHelper = dream_Engine.Mesh.CreateGridHelper(20,20, 'red', 'blue')
+dream_Engine.scene.add(gridHelper)
 
 const startPosition =  new THREE.Vector3(-10, 0, 0)
 const endPosition = new THREE.Vector3(10, 0, 0)
