@@ -34,4 +34,17 @@ export default class Light {
         return helper
 
     }
+
+    CreateDirectionalLightHelper(Light){
+        const helper = new THREE.DirectionalLightHelper(Light, 5)
+        this.scene.add(helper)
+        return helper
+    }
+
+    CreatePointLightHelper(PointLight){
+        const sphereSize = 1;
+        const helper = new THREE.PointLightHelper(PointLight, sphereSize)
+        this.scene.add(helper)
+        return helper
+    }
 }
