@@ -22,7 +22,15 @@ export default class Camera
         this.scene.add(this.instance)
         this.instance.position.set(125, 125, 125);
     }
-
+    setOrbitControls(canvas){
+        this.controls = new THREE.OrbitControls(this.instance, canvas)
+        this.controls.enableDamping = true
+    }
+    frame(){
+        if(this.controls && this.controls.enabled){
+            this.controls.update()
+        }
+    }
     resize()
     {
         this.instance.aspect = this.window.aspectRatio
