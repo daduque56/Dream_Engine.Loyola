@@ -10,18 +10,21 @@ export default class Light {
     }
 
     CreateAmbientLight(color, intensity) {
+        //castShadow = true;
         const light = new THREE.AmbientLight(color, intensity)
         this.scene.add(light)
         return light
     }
 
     CreateDirectionalLight(color, intensity) {
+        //castShadow = true;
         const light = new THREE.DirectionalLight(color, intensity)
         this.scene.add(light)
         return light
     }   
 
     CreatePointLight(color, intensity, distance, decay) {
+        //castShadow = true;
         const light = new THREE.PointLight(color, intensity, distance, decay)
         this.scene.add(light)
         return light
@@ -41,8 +44,7 @@ export default class Light {
         return helper
     }
 
-    CreatePointLightHelper(PointLight){
-        const sphereSize = 1;
+    CreatePointLightHelper(PointLight, sphereSize){
         const helper = new THREE.PointLightHelper(PointLight, sphereSize)
         this.scene.add(helper)
         return helper

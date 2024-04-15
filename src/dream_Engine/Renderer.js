@@ -15,6 +15,8 @@ export default class  Renderer{
             this.window.height
         )
         this.instance.setPixelRatio(this.window.pixelRatio)
+
+        this.instance.shadowMap.enabled = true;
     }
 
     resize (){

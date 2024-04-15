@@ -19,7 +19,7 @@ export default class Mesh {
         return mesh;
     }
     CreateFromGeometry (geometry, material) {
-       
+        //castShadow = true;
         const mesh = new THREE.Mesh(geometry, material);
         this.scene.add(mesh);
         return mesh;
@@ -27,7 +27,7 @@ export default class Mesh {
 
     CreateAxesHelper () 
     {
-        const axesHelper = new THREE.AxesHelper(5);
+        const axesHelper = new THREE.AxesHelper(2);
         this.scene.add(axesHelper);
         return axesHelper;
     }
