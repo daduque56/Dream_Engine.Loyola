@@ -1,13 +1,5 @@
-# hello-world
-This repository is for practicing the GitHub Flow
+# Dream_Engine
+This repository is for practicing the GitHub Flow for my Physic´s and Engine Simulations Course at Loyola Andalucia College!
 
-This is an exercise for my Physic´s and Engine Simulations Course at Loyola! My name is David H. Duque
-
-
-The members of this exercice are:
-
-David Hernan Duque
-Daniel Villegas
-Jaime Lopez
-Kidest Suarez
-Pablo Jimenez
+- The main objective of this repo is to design a Game Engine!
+- You will be able to find a game demo of a game done on my engine soon!
