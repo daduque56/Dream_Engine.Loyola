@@ -35,6 +35,7 @@ class Dream_Engine {
         this.Light = new Light(this);
         //this.OrbitControls = new OrbitControls(this);
         this.Assets = new AssetManager(this);
+        this.objects = [];
 
         //this.stats = new Stats();
         //this.stats.showPanel(0);
@@ -45,7 +46,7 @@ class Dream_Engine {
             this.handleArrowKeyInput(dt);
         };
     }
-frame (){
+    frame (){
         //this.debug.stats.begin()
         
         window.requestAnimationFrame(() => {
@@ -95,7 +96,26 @@ frame (){
             }
         }
     }
-
+    createObject() {
+        let object = new THREE.Object3D()
+        this.logger.info(
+            'Created objetc' + object.name + '#' + object.id
+        )
+        this.objects.push(object)
+        return object
+    }
+    getObjects(){
+        return this.objects
+    }
+    getObjetcById(id){
+        return this.objects.find(
+            object => object.id == id
+        )
+    }
+    addComponentToObject(object, componentName, data){
+        data.objectID = object.id
+        object [ componentName ] = data
+    }
 }
 
 export {Dream_Engine as default}
