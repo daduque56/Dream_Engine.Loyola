@@ -1,6 +1,6 @@
 import * as THREE from 'three'  
 import Dream_Engine from '../dream_Engine/Dream_Engine.js'
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
+import {GLTFLoader} from 'three/examples/jsm/Addons.js'
 
 const dream_Engine = new Dream_Engine()
 dream_Engine.camera.instance.position.set(4, 3, 5)
@@ -13,8 +13,7 @@ gltfLoader.load(
     (gltf) => {
         console.log('success')
         console.log(gltf)
-        gltf.scene.scale.set(0.5, 0.5, 0.5)
-        gltf.scene.position.set(0, 0, 0)
+        gltf.scene.scale.set(0.025, 0.025, 0.025)
 
         dream_Engine.scene.add(gltf.scene)
     },
