@@ -18,6 +18,7 @@ doorMesh.position.x = -1
 
 let helmetModel = null 
 
+
 dream_Engine.onAssetsLoaded = (e) => {
 
     material.map = dream_Engine.assets.get('colorTexture')
