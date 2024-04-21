@@ -10,12 +10,13 @@ const gltfLoader = new GLTFLoader()
 console.log(gltfLoader)
 gltfLoader.load(
     'Fox.gltf',
+    console.log("funcionaaa"),
     (gltf) => {
         console.log('success')
         console.log(gltf)
         gltf.scene.scale.set(0.025, 0.025, 0.025)
-
         dream_Engine.scene.add(gltf.scene)
+        
     },
     (progress) => {
         console.log('progress')
@@ -34,7 +35,7 @@ const directionalLight = dream_Engine.Light.CreateDirectionalLight('yellow', 1)
 directionalLight.position.set(5, 5, 5)
 
 const planeMesh = dream_Engine.Mesh.CreateFromGeometry(
-    new THREE.PlaneGeometry(10, 10),
+    new THREE.PlaneGeometry(1, 1),
     new THREE.MeshStandardMaterial(
         {color: 'green'})
 )
