@@ -9,7 +9,7 @@ dream_Engine.camera.instance.position.set(4, 3, 5)
 const gltfLoader = new GLTFLoader()
 console.log(gltfLoader)
 gltfLoader.load(
-    'Dream_Engine.Loyola/static/Models/Fox/Fox.gltf',
+    'Fox.gltf',
     (gltf) => {
         console.log('success')
         console.log(gltf)
