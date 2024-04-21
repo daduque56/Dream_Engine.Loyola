@@ -14,7 +14,7 @@ gltfLoader.load(
     (gltf) => {
         console.log('success')
         console.log(gltf)
-        gltf.scene.scale.set(0.025, 0.025, 0.025)
+       // gltf.scene.scale.set(0.025, 0.025, 0.025)
         dream_Engine.scene.add(gltf.scene)
         
     },
