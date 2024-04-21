@@ -21,13 +21,13 @@ let helmetModel = null
 
 dream_Engine.onAssetsLoaded = (e) => {
 
-    material.map = dream_Engine.assets.get('colorTexture')
-    material.aoMap = dream_Engine.assets.get('aoTexture')
+    material.map = dream_Engine.Assets.get('colorTexture')
+    material.aoMap = dream_Engine.Assets.get('aoTexture')
     material.transparent = true
-    material.alphaMap = dream_Engine.assets.get('alphaTexture')
+    material.alphaMap = dream_Engine.Assets.get('alphaTexture')
     material.needsUpdate = true
 
-    helmetModel = dream_Engine.assets.get('helmetModel')
+    helmetModel = dream_Engine.Assets.get('helmetModel')
     helmetModel.scene.scale.set(0.5, 0.5, 0.5)
     helmetModel.scene.position.x = 1
     dream_Engine.scene.add(helmetModel.scene, doorMesh)
@@ -36,3 +36,5 @@ dream_Engine.onAssetsLoaded = (e) => {
 const ambientLight = dream_Engine.Light.CreateAmbientLight('white', 1)
 const directionalLight = dream_Engine.Light.CreateDirectionalLight('white', 1)
 directionalLight.position.set(5, 3, 3)
+
+dream_Engine.scene.add(ambientLight, directionalLight, doorMesh)
