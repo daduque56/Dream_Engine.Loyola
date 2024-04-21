@@ -34,10 +34,10 @@ export default class Input {
         });
 
         // Listener para saber la posicion del mouse
-        window.addEventListener('mousemove', mouseMoveHandler)
+        /*window.addEventListener('mousemove', mouseMoveHandler)
         function mouseMoveHandler (event) {
         console.log(event)
-        }
+        }*/
 
         // Listener para saber si el mouse esta siendo presionado
         window.addEventListener('mouseup', (event) => {
