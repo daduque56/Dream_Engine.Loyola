@@ -7,6 +7,7 @@ import Camera from "./Camera";
 import { Scene } from "./Scene";
 import Mesh from "./Mesh";
 import Light from "./Light";
+import AssetManager from "./AssetManager";
 //import OrbitControls from "./OrbitControls";
 
 class Dream_Engine {
@@ -33,6 +34,7 @@ class Dream_Engine {
         this.Mesh = new Mesh(this);
         this.Light = new Light(this);
         //this.OrbitControls = new OrbitControls(this);
+        this.Assets = new AssetManager(this);
 
         //this.stats = new Stats();
         //this.stats.showPanel(0);
