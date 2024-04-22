@@ -76,22 +76,24 @@ Suelo.position.set(0, -1, 0)
 let rotacionTotal = 0
 
 game.update = (dt) => {
+
+    player.mesh.position.copy(player.position)  
+    player.mesh.rotation.copy(player.rotation)
     
     if (game.input.isKeyPressed('KeyD')){
-        player.position.x += 500 * dt
-        
+        player.position.x += 5 * dt
         game.logger.points("Player se mueve a la derecha")
     }
     if (game.input.isKeyPressed('KeyA')){
-        player.position.x -= 500 * dt
+        player.position.x -= 5 * dt
         game.logger.points("Player se mueve a la izquierda")
     }
     if (game.input.isKeyPressed('KeyW')){
-        player.position.y +=  500 * dt
+        player.position.z -=  5 * dt
         game.logger.points("Player se mueve hacia arriba")
     }
     if (game.input.isKeyPressed('KeyS')){
-        player.position.y -= 500 * dt
+        player.position.z += 5 * dt
         game.logger.points("Player se mueve hacia abajo")   
     }
     if (game.input.isKeyPressed('KeyQ')){
