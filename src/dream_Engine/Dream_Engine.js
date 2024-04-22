@@ -8,6 +8,7 @@ import { Scene } from "./Scene";
 import Mesh from "./Mesh";
 import Light from "./Light";
 import AssetManager from "./AssetManager";
+import * as THREE from 'three';
 //import OrbitControls from "./OrbitControls";
 
 class Dream_Engine {
