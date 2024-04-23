@@ -48,12 +48,12 @@ class Dream_Engine {
         };
     }
     frame (){
-        //this.debug.stats.begin()
-        
         window.requestAnimationFrame(() => {
             this.frame()
         })
 
+        if (!this.isRunning)
+        {
         const now = Date.now()
         this.dt = (now - this.lastFrameTime) / 1000
         this.lastFrameTime = now
@@ -62,9 +62,18 @@ class Dream_Engine {
 
         this.update(this.dt)
         
+            for (const object of this.objects){
+                if (object.rigidBody){
+                    object.position.copy(object.rigidBody.position)
+                    object.quaternion.copy(object.rigidBody.quaternion)
+                }
+            }
+            this.physics.update(this.dt, this.objects)
+        }
+
+        this.camera.frame()
         this.renderer.frame()
-        //this.debug.stats.end()
-    }
+    }   
    
     start () {
 
