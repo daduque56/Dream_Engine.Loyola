@@ -2,9 +2,6 @@
     "name": "dream-engine-studio",
     "description": "My new Game",
     "authors": [
-        "Kidest Suarez",
-        "Jaime Lopez",
-        "Pablo Jimenez",
         "David Duque"
     ],
     "version": "1.0.0",
