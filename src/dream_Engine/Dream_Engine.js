@@ -9,6 +9,7 @@ import Mesh from "./Mesh";
 import Light from "./Light";
 import AssetManager from "./AssetManager";
 import * as THREE from 'three';
+import Physics from "./Physics";
 //import OrbitControls from "./OrbitControls";
 
 class Dream_Engine {
@@ -34,6 +35,7 @@ class Dream_Engine {
         this.renderer = new Renderer(this,this.scene);
         this.Mesh = new Mesh(this);
         this.Light = new Light(this);
+        this.Physics = new Physics(this);
         //this.OrbitControls = new OrbitControls(this);
         this.Assets = new AssetManager(this);
         this.objects = [];
@@ -52,23 +54,25 @@ class Dream_Engine {
             this.frame()
         })
 
-        if (!this.isRunning)
+        if (this.isRunning)
         {
-        const now = Date.now()
-        this.dt = (now - this.lastFrameTime) / 1000
-        this.lastFrameTime = now
-        this.totalElapsed = this.lastFrameTime - this.startTime
-        this.totalElapsedInSeconds = this.totalElapsed / 1000
+            const now = Date.now()
+            this.dt = (now - this.lastFrameTime) / 1000
+            this.lastFrameTime = now
+            this.totalElapsed = this.lastFrameTime - this.startTime
+            this.totalElapsedInSeconds = this.totalElapsed / 1000
 
-        this.update(this.dt)
+            this.update(this.dt)
         
             for (const object of this.objects){
-                if (object.rigidBody){
-                    object.position.copy(object.rigidBody.position)
-                    object.quaternion.copy(object.rigidBody.quaternion)
+                
+                if (object.rigidbody){
+                    object.position.copy(object.rigidbody.position)
+                    object.quaternion.copy(object.rigidbody.quaternion)
                 }
             }
-            this.physics.update(this.dt, this.objects)
+
+            this.Physics.Update(this.dt, this.objects)
         }
 
         this.camera.frame()
@@ -109,7 +113,7 @@ class Dream_Engine {
     createObject() {
         let object = new THREE.Object3D()
         this.logger.info(
-            'Created objetc' + object.name + '#' + object.id
+            'Created object' + object.name + '#' + object.id
         )
         this.objects.push(object)
         return object
