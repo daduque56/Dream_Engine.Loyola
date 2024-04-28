@@ -130,6 +130,7 @@ class Dream_Engine {
         data.objectID = object.id
         object [ componentName ] = data
     }
+  
 }
 
 export {Dream_Engine as default}
