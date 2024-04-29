@@ -17,7 +17,7 @@ directionalLight.shadow.camera.right = 40;
 directionalLight.shadow.camera.bottom = -40;
 directionalLight.shadow.camera.left = -40;
 
-game.camera.instance.zoom = 0.5
+game.camera.instance.zoom = 0.8
 game.camera.instance.updateProjectionMatrix()
 
 // Creating a ball with a mesh and a rigid body
@@ -39,7 +39,7 @@ game.addComponentToObject(
     })
 )
 game.Physics.world.addBody(ball.rigidbody);
-
+console.log(ball)
 const ballMeshHelper = game.Mesh.CreateAxesHelper(2)
 
 ball.mesh.add(ballMeshHelper)
@@ -49,7 +49,7 @@ ball.mesh.position.copy(ball.rigidbody.position)
 game.scene.instance.add(ambientLight, directionalLight);
 
 ///////////////////////////////////////////////////////////////////
-
+/*Practice*/ 
 
 //////////////////////////////////////////////////////////////////
 const suelo = game.createObject("suelo");   
@@ -74,7 +74,7 @@ game.update = (dt) => {
     //console.log(ball.position)
 
     game.camera.instance.lookAt(0,0,0)
-    game.Physics.world.step(dt)
+    //game.Physics.world.step(dt)
     
 
 }
