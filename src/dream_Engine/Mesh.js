@@ -25,9 +25,9 @@ export default class Mesh {
         return mesh;
     }
 
-    CreateAxesHelper () 
+    CreateAxesHelper (size) 
     {
-        const axesHelper = new THREE.AxesHelper(2);
+        const axesHelper = new THREE.AxesHelper(size);
         this.scene.add(axesHelper);
         return axesHelper;
     }
