@@ -7,18 +7,20 @@ gameTest.camera.instance.position.set(8 , 20, 40)
 gameTest.Physics.world.gravity.set(0, -9.81, 0);
 
 ///////----> Creating the lights <----///////
+
 const ambientLight = gameTest.Light.CreateAmbientLight('white', 1);
 const directionalLight = gameTest.Light.CreateDirectionalLight('white', 1);
 gameTest.scene.instance.add(ambientLight, directionalLight);
 
 ///////----> Creating the floor <----///////
+
 const floor = gameTest.createObject("floor");
 
 gameTest.addComponentToObject(
     floor,
     'mesh',
     gameTest.Mesh.CreateFromGeometry(
-        new THREE.PlaneGeometry(80, 80),
+        new THREE.PlaneGeometry(80, 80),    
         new THREE.MeshStandardMaterial({ color: 'darkslategray' })
     )
 )
@@ -38,6 +40,7 @@ gameTest.camera.instance.lookAt(floor.position)
 ///////----> Creating the spheres <----///////
 
 ///////----> Small Sphere
+
 const smallSphere = gameTest.createObject();
 gameTest.addComponentToObject(
     smallSphere,
@@ -61,6 +64,7 @@ smallSphere.mesh.position.set(-8, 1, 8)
 smallSphere.rigidbody.velocity.set(0, 0, 0)
 
 ///////----> Big Sphere
+
 const bigSphere = gameTest.createObject();
 gameTest.addComponentToObject(
     bigSphere,
