@@ -19,7 +19,6 @@ GenerateGravitational(pA, pB, mA, mB, G, minDistance, maxDistance);{
 
     return gravitationalForce
 }
-
 GenerateDrag(k, objectVelocity);{
     let dragVector = new CANNON.Vec3()
     // We only apply the friction force if the object is moving
@@ -36,4 +35,5 @@ GenerateDrag(k, objectVelocity);{
         // Calculate the final drag force vector, direction and magnitude
         dragVector = dragDirection.scale(dragMagnitude)
     }
+    return dragVector;
 }

@@ -4,7 +4,7 @@ import Dream_Engine from "../dream_Engine/Dream_Engine";
 
 const gameTest = new Dream_Engine();
 gameTest.camera.instance.position.set(8 , 20, 40)
-gameTest.Physics.world.gravity.set(0, -9.81, 0);
+//gameTest.Physics.world.gravity.set(0, -9.81, 0);
 
 ///////----> Creating the lights <----///////
 
@@ -60,7 +60,7 @@ gameTest.addComponentToObject(
 )
 const smallSphereHelper = gameTest.Mesh.CreateAxesHelper(1.5)
 smallSphere.mesh.add(smallSphereHelper)
-smallSphere.mesh.position.set(-8, 1, 8)
+smallSphere.mesh.position.set(-8, 2, 8)
 smallSphere.rigidbody.velocity.set(0, 0, 0)
 
 ///////----> Big Sphere
@@ -84,16 +84,19 @@ gameTest.addComponentToObject(
 )
 const bigSphereHelper = gameTest.Mesh.CreateAxesHelper(3)
 bigSphere.mesh.add(bigSphereHelper)
-bigSphere.mesh.position.set(-4, 2, 8)
+bigSphere.mesh.position.set(-4, 3, 8)
 bigSphere.rigidbody.velocity.set(0, 0, 0)
 
 
 gameTest.start()
 
 gameTest.update = (dt) => {
-    //console.log(smallSphere.rigidbody.velocity, bigSphere.rigidbody.velocity)
-    //smallSphere.rigidbody.applyForce(new CANNON.Vec3(0, 0, 0))
-    //bigSphere.rigidbody.applyForce(new CANNON.Vec3(0, 0, 0))
+    smallSphere.mesh.position.copy(smallSphere.rigidbody.position)
+    bigSphere.mesh.position.copy(bigSphere.rigidbody.position)
+    
+    console.log(smallSphere.rigidbody.velocity, bigSphere.rigidbody.velocity)
+    smallSphere.rigidbody.applyForce(new CANNON.Vec3(0, 0, 0))
+    bigSphere.rigidbody.applyForce(new CANNON.Vec3(0, 0, 0))
 }
 
 console.log(console.log(gameTest.getObjects())
