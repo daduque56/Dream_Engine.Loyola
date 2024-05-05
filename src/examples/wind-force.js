@@ -4,36 +4,33 @@ import Dream_Engine from "../dream_Engine/Dream_Engine";
 
 const gameTest = new Dream_Engine();
 gameTest.camera.instance.position.set(8 , 20, 40)
-//gameTest.Physics.world.gravity.set(0, -9.81, 0);
 
 ///////----> Creating the lights <----///////
-
+// ----------------------------------------------------------------------------> Changes started here
 const ambientLight = gameTest.Light.CreateAmbientLight('white', 1);
 const directionalLight = gameTest.Light.CreateDirectionalLight('white', 1);
+ambientLight.castShadow = true;
+directionalLight.castShadow = true;
+directionalLight.position.set(9, 9, 9)
+directionalLight.shadow.camera.top = 20;
+directionalLight.shadow.camera.right = 20;
+directionalLight.shadow.camera.bottom = -20;
+directionalLight.shadow.camera.left = -20;
 gameTest.scene.instance.add(ambientLight, directionalLight);
 
 ///////----> Creating the floor <----///////
 
 const floor = gameTest.createObject("floor");
-
 gameTest.addComponentToObject(
     floor,
     'mesh',
     gameTest.Mesh.CreateFromGeometry(
-        new THREE.PlaneGeometry(80, 80),    
-        new THREE.MeshStandardMaterial({ color: 'darkslategray' })
+        new THREE.PlaneGeometry(100, 100),    
+        new THREE.MeshStandardMaterial({ color: 'sienna' })
     )
 )
-gameTest.addComponentToObject(
-    floor,
-    'rigidbody',
-    gameTest.Physics.CreateBody({
-        mass: 0,
-        shape: new CANNON.Plane(),
-        velocity: new CANNON.Vec3(0, 0, 0)
-    })
-)
-floor.mesh.rotation.x = -Math.PI / 2
+floor.mesh.receiveShadow = true;
+floor.mesh.rotation.x = (-Math.PI / 2);
 
 gameTest.camera.instance.lookAt(floor.position)
 
@@ -47,21 +44,23 @@ gameTest.addComponentToObject(
     'mesh',
     gameTest.Mesh.CreateFromGeometry(
         new THREE.SphereGeometry(1, 32, 16),
-        new THREE.MeshStandardMaterial({ color: 'red' })
+        new THREE.MeshStandardMaterial({ color: 'royalblue' })
     )
 )
 gameTest.addComponentToObject(
     smallSphere,
     'rigidbody',
     gameTest.Physics.CreateBody({
-        mass: 10,
+        mass: 1,
         shape: new CANNON.Sphere(1)
     })
 )
+smallSphere.mesh.castShadow = true;
+smallSphere.rigidbody.position.set(-8, 1, 8)
+smallSphere.rigidbody.velocity.set(0, 0, -2)
+
 const smallSphereHelper = gameTest.Mesh.CreateAxesHelper(1.5)
 smallSphere.mesh.add(smallSphereHelper)
-smallSphere.mesh.position.set(-8, 2, 8)
-smallSphere.rigidbody.velocity.set(0, 0, 0)
 
 ///////----> Big Sphere
 
@@ -71,31 +70,35 @@ gameTest.addComponentToObject(
     'mesh',
     gameTest.Mesh.CreateFromGeometry(
         new THREE.SphereGeometry(2, 32, 16),
-        new THREE.MeshStandardMaterial({ color: 'blue' })
+        new THREE.MeshStandardMaterial({ color: 'gold' })
     )
 )
 gameTest.addComponentToObject(
     bigSphere,
     'rigidbody',
     gameTest.Physics.CreateBody({
-        mass: 20,
+        mass: 2,
         shape: new CANNON.Sphere(1)
     })
 )
+bigSphere.mesh.castShadow = true;
+bigSphere.rigidbody.position.set(-4, 2, 8);
+bigSphere.rigidbody.velocity.set(0, 0, 2)  
+
 const bigSphereHelper = gameTest.Mesh.CreateAxesHelper(3)
 bigSphere.mesh.add(bigSphereHelper)
-bigSphere.mesh.position.set(-4, 3, 8)
-bigSphere.rigidbody.velocity.set(0, 0, 0)
 
+gameTest.camera.instance.lookAt(floor.mesh.position)
 
 gameTest.start()
 
 gameTest.update = (dt) => {
+    
     smallSphere.mesh.position.copy(smallSphere.rigidbody.position)
     bigSphere.mesh.position.copy(bigSphere.rigidbody.position)
-    
+
     console.log(smallSphere.rigidbody.velocity, bigSphere.rigidbody.velocity)
-    smallSphere.rigidbody.applyForce(new CANNON.Vec3(0, 0, 0))
+    smallSphere.rigidbody.applyForce(new CANNON.Vec3(1, 0, 0))
     bigSphere.rigidbody.applyForce(new CANNON.Vec3(0, 0, 0))
 }
 
