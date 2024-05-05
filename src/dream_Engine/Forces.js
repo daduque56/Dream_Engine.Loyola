@@ -1,5 +1,7 @@
 import * as CANNON from 'cannon-es';
-GenerateGravitational(pA, pB, mA, mB, G, minDistance, maxDistance);{
+
+class Forces {
+GenerateGravitational(pA, pB, mA, mB, G, minDistance, maxDistance) {
     // Calculate the distance between the two objects
     let distance = pB.clone()
     distance.sub(pA)
@@ -19,21 +21,25 @@ GenerateGravitational(pA, pB, mA, mB, G, minDistance, maxDistance);{
 
     return gravitationalForce
 }
-GenerateDrag(k, objectVelocity);{
-    let dragVector = new CANNON.Vec3()
-    // We only apply the friction force if the object is moving
-    if (objectVelocity.lenghtSquared() > 0){
 
-        // Calculate the drag force direction (Inverse of the velocity unit vector)
+GenerateDrag(k, objectVelocity) {
+
+    let dragVector = new CANNON.Vec3()
+    
+    if (objectVelocity.lengthSquared() > 0){
+        
         let dragDirection = objectVelocity.clone()
         dragDirection.normalize()
         dragDirection = dragDirection.negate()
 
-        // Calculate the drag force magnitude k * |v|^2
         const dragMagnitude = k * objectVelocity.lengthSquared()
 
-        // Calculate the final drag force vector, direction and magnitude
         dragVector = dragDirection.scale(dragMagnitude)
     }
     return dragVector;
 }
+}
+
+
+
+export default Forces;
