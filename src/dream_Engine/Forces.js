@@ -2,26 +2,25 @@ import * as CANNON from 'cannon-es';
 
 class Forces {
 GenerateGravitational(pA, pB, mA, mB, G, minDistance, maxDistance) {
-    // Calculate the distance between the two objects
+    
     let distance = pB.clone()
     distance.sub(pA)
     let distanceSquared = distance.lengthSq()
 
-    // Clamp the values of the distance (to allow for some interesting effects)
+
     distanceSquared = Math.min(Math.max(distanceSquared, minDistance))
 
-    // Calculate the direction of the attraction force
+   
     distance.normalize()
 
-    // Calculate the strenght of the attraction force
+    
     const attractionMagnitude = G * mA * mB / distanceSquared
 
-    // Calculate the final resulting attration force vector
+    
     const gravitationalForce = distance.mulitplyScalar(attractionMagnitude)
 
     return gravitationalForce
 }
-
 GenerateDrag(k, objectVelocity) {
 
     let dragVector = new CANNON.Vec3()
@@ -37,6 +36,37 @@ GenerateDrag(k, objectVelocity) {
         dragVector = dragDirection.scale(dragMagnitude)
     }
     return dragVector;
+}
+GenerateMagnusForce(spin, velocity, k) {
+
+        let magnusForce = new CANNON.Vec3();
+
+        magnusForce.cross(velocity, spin);
+        
+        let magnusMagnitude = velocity.length() * spin.length() * k;
+
+        magnusForce = magnusForce.scale((magnusMagnitude));
+        
+        return magnusForce;
+}
+GenerateBuoyantForce(density, volume, g) {
+    let buoyantForceMagnitude = density * volume * g;
+    
+    let buoyantForce = new CANNON.Vec3(0, buoyantForceMagnitude, 0);
+
+    return buoyantForce;
+}
+GenerateTensionForce(k, displacement, length) {
+
+    let tensionForceMagnitude = k * displacement.length() / length;
+    
+
+    let tensionForce = displacement.clone().negate().normalize().scale(tensionForceMagnitude);
+    return tensionForce;
+}
+GenerateDampingForce(k, velocity) {
+    let dampingForce = velocity.clone().negate().scale(k);
+    return dampingForce;
 }
 }
 
