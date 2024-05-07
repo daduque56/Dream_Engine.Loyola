@@ -76,14 +76,6 @@ gameTest.update = (dt) => {
     ball.rigidbody.applyForce(new CANNON.Vec3(0, -9.81,0));
     ball.rigidbody.applyForce(new CANNON.Vec3(-9.81, 0, 0));
     ball.rigidbody.applyForce(new CANNON.Vec3(0, 0, -9.81));
-/*
-    if (ball.rigidbody.position.x == 0 && ball.rigidbody.position.x != 5) {
-        ball.rigidbody.applyForce(new CANNON.Vec3(0, 0, 2));
-    } 
-    else if (ball.rigidbody.position.x == 0 && ball.rigidbody.position.x != 5)
-    {
-        ball.rigidbody.applyForce(new CANNON.Vec3(0, 0, 0));
-    } */
 
     ball.mesh.position.copy(ball.rigidbody.position);
     anchor.mesh.position.copy(anchor.rigidbody.position);
