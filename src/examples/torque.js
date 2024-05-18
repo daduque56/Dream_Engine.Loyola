@@ -3,7 +3,7 @@ import * as CANNON from 'cannon-es';
 import Dream_Engine from "../dream_Engine/Dream_Engine";
 
 const torqueGame = new Dream_Engine();
-torqueGame.camera.instance.position.set(50, 0, 0);
+torqueGame.camera.instance.position.set(40, 0, 0);
 torqueGame.Physics.world.gravity.set(0, -2.81, 0);
 
 // ------------------------------------------> FONDO DEL ESCENARIO
