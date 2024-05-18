@@ -9,7 +9,6 @@ export default class Mesh {
 
     CreateFromVertices (vertices, color) {
         const geometry = new THREE.BufferGeometry();
-
         const positionAttribute = new THREE.BufferAttribute(vertices, 3);
         geometry.setAttribute('position', positionAttribute);
         const material = new THREE.MeshBasicMaterial({ color: color });
@@ -21,6 +20,8 @@ export default class Mesh {
     CreateFromGeometry (geometry, material) {
         //castShadow = true;
         const mesh = new THREE.Mesh(geometry, material);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
         this.scene.add(mesh);
         return mesh;
     }
@@ -41,7 +42,8 @@ export default class Mesh {
 
     CreateArrowHelper ( dir, origin, length, hex) {
 
-        const arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
+        const normalizedDir = dir.clone().normalize();
+        const arrowHelper = new THREE.ArrowHelper(normalizedDir, origin, length, hex);
         this.scene.add(arrowHelper);
         return arrowHelper;
     }   

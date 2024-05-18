@@ -1,4 +1,5 @@
 import * as CANNON from 'cannon-es';
+import CannonDebugger from 'cannon-es-debugger';
 
 export default class Physics 
 {
@@ -6,6 +7,20 @@ export default class Physics
     {
         this.scene = dream_Engine.scene;
         this.world = new CANNON.World();
+        this.debugger = new CannonDebugger(
+            this.scene,
+            this.world,
+            {
+                onInit(body, mesh) {
+                    mesh.visible = false;
+                    document.addEventListener('keydown', (event) => {
+                        if (event.key === '.') {
+                            mesh.visible = !mesh.visible;
+                        }
+                    }); 
+                },
+            }
+        )
         this.logger = dream_Engine.logger;
         this.logger.info("Physics constructor called");     
     }
