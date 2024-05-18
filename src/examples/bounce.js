@@ -11,6 +11,9 @@ const ambientLight = bounceGame.Light.CreateAmbientLight('purple', 1);
 const directionalLight = bounceGame.Light.CreateDirectionalLight('blue', 2);
 const directionalLight2 = bounceGame.Light.CreateDirectionalLight('white', 1);
 
+directionalLight.position.set(2, 2, 2);
+directionalLight2.position.copy(directionalLight.position)
+
 // ------------------------------------------> MATERIALES
 const concreteMaterial = new CANNON.Material('concrete');
 const plasticMaterial = new CANNON.Material('plastic');
@@ -23,7 +26,7 @@ const concretePlasticContact = new CANNON.ContactMaterial(concreteMaterial, plas
 bounceGame.Physics.world.addContactMaterial(concretePlasticContact)
 
 // ------------------------------------------> BOLA
-const bouncyBall = bounceGame.createObject();
+const bouncyBall = bounceGame.createObject("bouncyBall");
 bounceGame.addComponentToObject(
     bouncyBall,
     'mesh',
@@ -41,12 +44,15 @@ bounceGame.addComponentToObject(
         material: plasticMaterial
     })
 )
+bouncyBall.rigidbody.addEventListener('collide', (e) => {
+    console.log('bouncyBall collided with', e.body)
+})
 bouncyBall.rigidbody.position.set(0, 5, 0);
 
 // ------------------------------------------> PISO Y GRID
 const gridHelper = bounceGame.Mesh.CreateGridHelper(10, 10, 'gray', 'white');
 gridHelper.position.y = 0.15;
-const ground = bounceGame.createObject();
+const ground = bounceGame.createObject("ground");
 bounceGame.addComponentToObject(
     ground,
     'mesh',
