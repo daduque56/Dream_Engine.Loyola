@@ -7,18 +7,29 @@ bounceGame.camera.instance.position.set(0, 10, 20);
 bounceGame.Physics.world.gravity.set(0, -9.81, 0);
 
 // ------------------------------------------> LUCES
-const ambientLight = bounceGame.Light.CreateAmbientLight('white', 1);
-const directionalLight = bounceGame.Light.CreateDirectionalLight('white', 1);
+const ambientLight = bounceGame.Light.CreateAmbientLight('purple', 1);
+const directionalLight = bounceGame.Light.CreateDirectionalLight('blue', 2);
+const directionalLight2 = bounceGame.Light.CreateDirectionalLight('white', 1);
 
+// ------------------------------------------> MATERIALES
+const concreteMaterial = new CANNON.Material('concrete');
+const plasticMaterial = new CANNON.Material('plastic');
+const concretePlasticContact = new CANNON.ContactMaterial(concreteMaterial, plasticMaterial, 
+    {
+        friction: 0.1,
+        restitution: 0.7
+    }
+)
+bounceGame.Physics.world.addContactMaterial(concretePlasticContact)
 
-// ------------------------------------------> JUGADOR
+// ------------------------------------------> BOLA
 const bouncyBall = bounceGame.createObject();
 bounceGame.addComponentToObject(
     bouncyBall,
     'mesh',
     bounceGame.Mesh.CreateFromGeometry(
         new THREE.SphereGeometry(1),
-        new THREE.MeshStandardMaterial({ color: 'crimson'})
+        new THREE.MeshStandardMaterial({ color: 'purple'})
     )
 )
 bounceGame.addComponentToObject(
@@ -26,32 +37,36 @@ bounceGame.addComponentToObject(
     'rigidbody',
     bounceGame.Physics.CreateBody({
         mass: 1,
-        shape: new CANNON.Sphere(1)
+        shape: new CANNON.Sphere(1),
+        material: plasticMaterial
     })
 )
-bouncyBall.mesh.position.set(0, 7, 0);
+bouncyBall.rigidbody.position.set(0, 5, 0);
 
-// ------------------------------------------> PISO
-const floor = bounceGame.createObject("floor");
+// ------------------------------------------> PISO Y GRID
+const gridHelper = bounceGame.Mesh.CreateGridHelper(10, 10, 'gray', 'white');
+gridHelper.position.y = 0.15;
+const ground = bounceGame.createObject();
 bounceGame.addComponentToObject(
-    floor,
-    'rigidbody',
-    bounceGame.Physics.CreateBody({mass: 0, shape: new CANNON.Plane()})
-)
-bounceGame.addComponentToObject(
-    floor,
+    ground,
     'mesh',
     bounceGame.Mesh.CreateFromGeometry(
-        new THREE.PlaneGeometry(10, 10),
-        new THREE.MeshStandardMaterial({color: 'gray'})
+        new THREE.BoxGeometry(10, 0.2, 10),
+        new THREE.MeshPhongMaterial({ color: 'green', transparent: true, opacity: 1 })
     )
 )
-floor.mesh.position.set(0, -3, 0);  
-floor.mesh.rotateX(-Math.PI / 2);
+bounceGame.addComponentToObject(
+    ground,
+    'rigidbody',
+    bounceGame.Physics.CreateBody({
+        mass: 0,
+        shape: new CANNON.Box(new CANNON.Vec3(5, 0.1, 5)),
+        material: concreteMaterial
+    }
+))
 
 bounceGame.update(() => {
-    bouncyBall.mesh.position.copy(bouncyBall.rigidbody.position);
-    bouncyBall.mesh.quaternion.copy(bouncyBall.rigidbody.quaternion);
+
 })
 
 bounceGame.camera.instance.lookAt(0, 0, 0);
