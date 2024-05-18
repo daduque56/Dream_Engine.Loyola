@@ -11,13 +11,14 @@ import AssetManager from "./AssetManager";
 import * as THREE from 'three';
 import Physics from "./Physics";
 import Forces from "./Forces";
-//import OrbitControls from "./OrbitControls";
 
 class Dream_Engine {
     constructor() {
 
         // HELLO 
         
+        this.objects = [];
+
         this.logger = new Logger()
         this.logger.info('Dream_Engine constructor called')
 
@@ -40,7 +41,7 @@ class Dream_Engine {
         this.Forces = new Forces(this);
         //this.OrbitControls = new OrbitControls(this);
         this.Assets = new AssetManager(this);
-        this.objects = [];
+      
 
         //this.stats = new Stats();
         //this.stats.showPanel(0);

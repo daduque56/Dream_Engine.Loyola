@@ -7,7 +7,7 @@ export default class  Renderer{
         this.window = Dream_Engine.window
         this.scene = Dream_Engine.scene.instance
         this.camera = Dream_Engine.camera.instance
-        this.objects = Dream_Engine.objects
+        this.objects = Dream_Engine.objects;
 
         this.instance  = new THREE.WebGLRenderer({antialias: true})
         document.body.appendChild(this.instance.domElement)
@@ -35,10 +35,10 @@ export default class  Renderer{
         for (const object of this.objects){
             
             // Update the position and rotation of the helpers
-            if (object.axesHelper.visible){
+           /* if (object.axesHelper.visible && object.axesHelper.visible){
                 object.axesHelper.position.copy(object.position)
                 object.axesHelper.quaternion.copy(object.quaternion)
-            }
+            }*/
 
             // Updatin mesh position and rotation
             if(object.mesh){
