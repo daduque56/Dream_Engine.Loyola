@@ -10,15 +10,14 @@ export default class Light {
     }
 
     CreateAmbientLight(color, intensity) {
-        //castShadow = true;
         const light = new THREE.AmbientLight(color, intensity)
         this.scene.add(light)
         return light
     }
 
-    CreateDirectionalLight(color, intensity) {
-        //castShadow = true;
+    CreateDirectionalLight(color, intensity) { 
         const light = new THREE.DirectionalLight(color, intensity)
+        light.castShadow = true
         this.scene.add(light)
         return light
     }   
