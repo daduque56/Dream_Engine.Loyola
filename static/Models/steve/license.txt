@@ -1,0 +1,11 @@
+Model Information:
+* title:	Steve
+* source:	https://sketchfab.com/3d-models/steve-0f748a12b9c3481fb6f429de6ab5f2c0
+* author:	Sparky (https://sketchfab.com/sparky)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Steve" (https://sketchfab.com/3d-models/steve-0f748a12b9c3481fb6f429de6ab5f2c0) by Sparky (https://sketchfab.com/sparky) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
