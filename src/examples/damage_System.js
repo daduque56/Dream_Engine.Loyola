@@ -29,6 +29,7 @@ game.Physics.world.addContactMaterial(waterPlasticContact)*/
 
 const marMaterial = new CANNON.Material('water');
 const barcoMaterial = new CANNON.Material('plastic');
+const tiburonMaterial = new CANNON.Material('tiburon');
 const marBarcoContact = new CANNON.ContactMaterial(marMaterial, barcoMaterial, 
     {
         friction: 0.1,
@@ -38,7 +39,13 @@ const marBarcoContact = new CANNON.ContactMaterial(marMaterial, barcoMaterial,
         frictionEquationRelaxation: 3
     }
 )
-game.Physics.world.addContactMaterial(marBarcoContact)
+const tiburonBarcoContact = new CANNON.ContactMaterial(tiburonMaterial, barcoMaterial,
+    {friction: 0.1, restitution: 0.4,}
+)
+const marTiburonContact = new CANNON.ContactMaterial(marMaterial, tiburonMaterial,
+    {friction: 0.7, restitution: 0.2,}
+)
+game.Physics.world.addContactMaterial(marBarcoContact, tiburonBarcoContact, marTiburonContact)
 
 // ------------------------------------------------------------------------->> LUCES
 const ambientLight = game.Light.CreateAmbientLight('white', 1)
@@ -217,30 +224,93 @@ CreateStructure(-25,0)
 
 
 // ------------------------------------------------------------------------->> ENEMIGOS
-let enemigos = []
+/*let tiburones = []
 
+function SpawnTiburon(x, z) {
+    const tiburon = game.createObject();
+    game.addComponentToObject(
+        tiburon,
+        'mesh',
+        game.Mesh.CreateFromGeometry(
+            new THREE.BoxGeometry(1, 0.5, 3),
+            new THREE.MeshStandardMaterial({ color: 'gray' })
+        )
+    );
+    game.addComponentToObject(
+        tiburon,
+        'rigidbody',
+        game.Physics.CreateBody({
+            mass: 1,
+            shape: new CANNON.Box(new CANNON.Vec3(0.5, 1.5, 0.5))
+        })
+    );
+    tiburon.rigidbody.position.set(x, tiburon.rigidbody.position.y, z);
+    tiburon.castShadow = true;
+    tiburon.rigidbody.position.set(x, 2, z);
+
+    tiburones.push(tiburon);
+}
+
+SpawnTiburon(5, 5);
+SpawnTiburon(-5, -5);
+SpawnTiburon(5, -5);*/
+const tiburon = game.createObject();    
+game.addComponentToObject(
+        tiburon,
+        'mesh',
+        game.Mesh.CreateFromGeometry(
+            new THREE.BoxGeometry(1, 0.5, 3),
+            new THREE.MeshStandardMaterial({ color: 'gray' })
+        )
+    );
+    game.addComponentToObject(
+        tiburon,
+        'rigidbody',
+        game.Physics.CreateBody({
+            mass: 1,
+            shape: new CANNON.Box(new CANNON.Vec3(1, 0.45, 3)),
+            material: tiburonMaterial
+        })
+    );
+    tiburon.rigidbody.position.set(-5, 2, 5);
 
 //---------------------------------------------------------------------------
 game.start()
 
 // ------------------------------------------------------------------------->> LOGS DE COLISIONES
 
+let vidasBarco = 3;
+
 barco.rigidbody.addEventListener('collide', (e) => {
-    if (e.body === spawn.rigidbody) {
-        console.log('barco esta en spawnpoint')
-    }
     if (e.body === mar.rigidbody) {
         console.log('barco esta en el mar')
+    }
+    if (e.body === tiburon.rigidbody) {
+        vidasBarco -= 1;
+        barco.rigidbody.applyForce(new CANNON.Vec3(5, 0, -5))
+        console.log('barco choco con tiburon')
+        console.log('Vidas restantes: ' + vidasBarco)
     }
 })
 
 // ------------------------------------------------------------------------->> tests
-    console.log(spawnBase.rigidbody.position.y , spawnBase.rigidbody.position.y)
+    
+
 
 // ---------------------------------------------------------------------------
 game.update = (dt) => {
 
-    
+    /*let barcoPosition = barco.rigidbody.position;
+
+    for (let i = 0; i > tiburones.length; i++) {
+        let tiburon = tiburones[i];
+
+        let direction = new THREE.Vector3().subVectors(barcoPosition, tiburon.rigidbody.position).normalize();
+        let tiburonSpeed = 0.5;
+        let tiburonVelocity = direction.multiplyScalar(tiburonSpeed * dt);
+
+        tiburon.rigidbody.position.add(tiburonVelocity)
+    }*/
     
     if (game.input.isKeyPressed('KeyW') || game.input.isKeyPressed('ArrowUp')) {
         barco.rigidbody.position.z -= 0.07
@@ -267,9 +337,9 @@ game.update = (dt) => {
         {
             barco.rigidbody.applyForce(new CANNON.Vec3(0, 20, 0))
         }  
-    }
+    }// ------------------------------------------------------------------------------------------>> TIBURONES
     if (game.input.isKeyPressed('KeyF') && enemigos.length < 3) {
-        const tiburon = game.createObject()
+        /*const tiburon = game.createObject()
         game.addComponentToObject(
             tiburon,
             'mesh',
@@ -283,17 +353,42 @@ game.update = (dt) => {
             'rigidbody',
             game.Physics.CreateBody({
                 mass: 1,
-                shape: new CANNON.Box(new CANNON.Vec3(1, 0.25, 1.5))
+                shape: new CANNON.Box(new CANNON.Vec3(1, 0.25, 1.5)),
+                speed: 0.5
             })
         )
 
-        // Set the enemy's position to a random point within the specified radius around the barco object
-        const radius = 5 // replace with the radius you want
+        //Spawnear tiburones aleatoreamente
+        const radius = 5
         const angle = Math.random() * Math.PI * 2
         const x = barco.rigidbody.position.x + radius * Math.cos(angle)
         const z = barco.rigidbody.position.z + radius * Math.sin(angle)
         tiburon.rigidbody.position.set(x, barco.rigidbody.position.y, z)
+        
+        //Calcular dirección 
+        let direction = new THREE.Vector3(
+        barco.rigidbody.position.x - tiburon.rigidbody.position.x,
+        0,
+        barco.rigidbody.position.z - tiburon.rigidbody.position.z
+        );
+        direction.normalize();
 
-        enemigos.push(tiburon)
+        // Move the tiburon
+        tiburon.rigidbody.position.x += direction.x * 0.5;
+        tiburon.rigidbody.position.z += direction.z * 0.5;
+
+        enemigos.push(tiburon)*/
     }
+    //setInterval(function() {
+    let direction = new THREE.Vector3(
+        barco.rigidbody.position.x - tiburon.rigidbody.position.x,
+        0,
+        barco.rigidbody.position.z - tiburon.rigidbody.position.z)
+    //);
+    direction.normalize();
+
+    // Move the tiburon
+    tiburon.rigidbody.position.x += direction.x * 0.05;
+    tiburon.rigidbody.position.z += direction.z * 0.05;
+//}, 1500);
 }       
