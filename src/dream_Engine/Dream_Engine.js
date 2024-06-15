@@ -18,6 +18,7 @@ class Dream_Engine {
         // HELLO 
         
         this.objects = [];
+        this.objectsToBeDestroyed = [];
 
         this.logger = new Logger()
         this.logger.info('Dream_Engine constructor called')
@@ -132,6 +133,14 @@ class Dream_Engine {
     addComponentToObject(object, componentName, data){
         data.objectID = object.id
         object [ componentName ] = data
+    }
+    destroyObject(object){
+        const index = this.objects.indexOf(object);
+        if(index !== -1) {
+            this.objects.splice(index, 1);
+        }
+
+        this.objectsToBeDestroyed.push(object)
     }
   
 }
