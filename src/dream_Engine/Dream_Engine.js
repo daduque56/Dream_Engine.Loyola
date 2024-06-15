@@ -114,8 +114,9 @@ class Dream_Engine {
             }
         }
     }
-    createObject() {
+    createObject(name) {
         let object = new THREE.Object3D()
+        object.name = name
         this.logger.info(
             'Created object' + object.name + '#' + object.id
         )

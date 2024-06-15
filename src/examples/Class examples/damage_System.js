@@ -335,7 +335,7 @@ game.update = (dt) => {
     if (game.input.isKeyPressed('Space')) {
         if (barco.rigidbody.position.y <= 1.5 || barco.rigidbody.position.y <= 3 && barco.rigidbody.position.y != 3.5)
         {
-            barco.rigidbody.applyForce(new CANNON.Vec3(0, 20, 0))
+            barco.rigidbody.applyForce(new CANNON.Vec3(0, 50, 0))
         }  
     }// ------------------------------------------------------------------------------------------>> TIBURONES
     if (game.input.isKeyPressed('KeyF') && enemigos.length < 3) {

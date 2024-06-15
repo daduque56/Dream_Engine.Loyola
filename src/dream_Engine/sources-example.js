@@ -18,6 +18,6 @@ export default
     {
     name: 'helmetModel',
     type: 'gltfModel',
-    path: '/Models/Helmet/FlightHelmet.gltf'
+    path: '/Models/FlightHelmet/glTF/FlightHelmet.gltf'
     }
 ]

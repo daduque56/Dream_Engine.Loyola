@@ -34,6 +34,7 @@ dream_Engine.Assets.onLoad = (e) => {
 }
 
 const ambientLigth = dream_Engine.Light.CreateAmbientLight('white', 1);
+dream_Engine.scene.add(ambientLigth);
 const directionalLight = dream_Engine.Light.CreateDirectionalLight('white', 1);
 directionalLight.position.set(5, 3, 3);
 
