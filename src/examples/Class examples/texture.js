@@ -28,8 +28,8 @@ loadingManager.onError = () => {
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
 const colorTexture = textureLoader.load('Puerta/Door_Wood_001_basecolor.jpg');
-//const normalTexture = textureLoader.load('Dream_Engine.Loyola/src/static/Puerta/Door_Wood_001_normal.jpg');
-//const metalnessTexture = textureLoader.load('Dream_Engine.Loyola/src/static/Puerta/Door_Wood_001_metallic.jpg');
+const normalTexture = textureLoader.load('Dream_Engine.Loyola/src/static/Puerta/Door_Wood_001_normal.jpg');
+const metalnessTexture = textureLoader.load('Dream_Engine.Loyola/src/static/Puerta/Door_Wood_001_metallic.jpg');
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({map: colorTexture});

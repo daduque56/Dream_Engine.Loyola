@@ -20,12 +20,65 @@ dream.camera.instance.updateProjectionMatrix()
 
 const ambientLight = dream.Light.CreateAmbientLight();
 dream.scene.add(ambientLight);
+
+const Light = dream.Light.CreateDirectionalLight('white', 6);
+Light.position.set(0, 10, 0);   
+const lightHelper = dream.Light.CreateDirectionalLightHelper(Light);
 //------------------------------------------------------------------------------>> TEXTURAS
 const loadingManager = new THREE.LoadingManager();
 const textureLoader = new THREE.TextureLoader(loadingManager);
-const colorTexture = textureLoader.load('/Models/Puerta/Door_Wood_001_basecolor.jpg');
+
+const colorTexture = textureLoader.load('/Textures/Lava_005_SD/Lava_005_COLOR.jpg');
+const heightTexture = textureLoader.load('/Textures/Lava_005_SD/Lava_005_DISP.png');
+const maskTexture = textureLoader.load('/Textures/Lava_005_SD/Lava_005_MASK.jpg');
+const normalTexture = textureLoader.load('/Textures/Lava_005_SD/Lava_005_NORM.jpg');
+const roughnessTexture = textureLoader.load('/Textures/Lava_005_SD/Lava_005_ROUGH.jpg');
+const ambientOcclusionTexture = textureLoader.load('/Textures/Lava_005_SD/Lava_005_OCC.jpg');
+
+const lavaMaterial = new THREE.MeshStandardMaterial();
+//lavaMaterial.map = colorTexture;
+//lavaMaterial.displacementMap = heightTexture;
+//lavaMaterial.displacementScale = 0.05;
+//lavaMaterial.alphaMap = maskTexture;
+//lavaMaterial.normalMap = normalTexture;
+//lavaMaterial.normalScale.set(0.5, 0.5);
+//lavaMaterial.roughnessMap = roughnessTexture;
+//lavaMaterial.roughness = 0.5;
+//lavaMaterial.aoMap = ambientOcclusionTexture;
+//lavaMaterial.aoMapIntensity = 1;
+//lavaMaterial.side = THREE.DoubleSide;
+//lavaMaterial.transparent = true;
+
+const lavaMaterial2 = new THREE.TextureLoader().load('/Textures/8bit.jpg');
 
 
+const suelo = dream.createObject('suelo')
+dream.addComponentToObject(
+    suelo,
+    'mesh',
+    dream.Mesh.CreateFromGeometry(
+        new THREE.PlaneGeometry(10, 10, 10, 10),
+        new THREE.MeshStandardMaterial({map: lavaMaterial2})
+    )
+)
+
+//suelo.setAttribute('uv2', new THREE.BufferAttribute(suelo.attributes.uv.array, 2))
+
+
+suelo.rotation.x = -Math.PI / 2
+
+const bachGroundTexture = textureLoader.load('/static/8bit.jpg');
+dream.scene.background = bachGroundTexture;
+
+const cubo = dream.createObject('cubo')
+dream.addComponentToObject(
+    cubo,
+    'mesh',
+    dream.Mesh.CreateFromGeometry(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshStandardMaterial({color: 'gray'})
+    )
+)
 
 //------------------------------------------------------------------------------>> STEVE
 
@@ -52,12 +105,7 @@ dream.addComponentToObject(
     }) 
 )
 
-let suelo = dream.Mesh.CreateFromGeometry(
-    new THREE.PlaneGeometry(10, 10, 20, 20),
-    new THREE.MeshBasicMaterial({ color: 0x00ff00,}),
-)
 
-suelo.rotation.x = -Math.PI / 2
 
 let isJumping = false;
 
@@ -69,6 +117,7 @@ dream.update = (dt) => {
     //steve.rotation.y += dt * 0.5;
     if (dream.input.isKeyPressed('KeyW') || dream.input.isKeyPressed('ArrowUp')) {
         steve.position.z -= 0.1
+        cubo.mesh.position.z -= 0.1
     }
     if (dream.input.isKeyPressed('KeyS')|| dream.input.isKeyPressed('ArrowDown')) {
         steve.position.z += 0.1
