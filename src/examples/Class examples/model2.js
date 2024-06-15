@@ -7,11 +7,11 @@ dream_Engine.camera.instance.position.set(4, 3, 5)
 
 const gltfLoader = new GLTFLoader()
 gltfLoader.load(
-    '/Models/Fox/Fox.gltf',
+    '/Models/steve/scene.gltf',
     (gltf) => {
         console.log('success')
         console.log(gltf)
-        gltf.scene.scale.set(0.025, 0.025, 0.025)
+        gltf.scene.scale.set(1, 1, 1)
         dream_Engine.scene.add(gltf.scene)
     }
 )
