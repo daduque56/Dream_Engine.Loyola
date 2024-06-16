@@ -85,6 +85,7 @@ dream.addComponentToObject(
 let steve = dream.createObject('steve')
 
 const gltfLoader = new GLTFLoader()
+
 gltfLoader.load(
     '/Models/steve/scene.gltf',
     (gltf) => {
@@ -105,6 +106,18 @@ dream.addComponentToObject(
     }) 
 )
 
+let coin = dream.createObject('coin')
+
+gltfLoader.load(
+    '/Models/coin.gltf/scene.gltf',
+    (gltf) => {
+        console.log('success')
+        console.log(gltf)
+        gltf.scene.scale.set(3, 3, 3)
+        coin = gltf.scene
+        dream.scene.add(gltf.scene)
+    }
+)
 
 
 let isJumping = false;
