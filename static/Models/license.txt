@@ -1,0 +1,11 @@
+Model Information:
+* title:	Crossy Road Chicken
+* source:	https://sketchfab.com/3d-models/crossy-road-chicken-83878413510d47f88898f4e1509e2491
+* author:	Spagheti (https://sketchfab.com/Spagheti)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Crossy Road Chicken" (https://sketchfab.com/3d-models/crossy-road-chicken-83878413510d47f88898f4e1509e2491) by Spagheti (https://sketchfab.com/Spagheti) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
