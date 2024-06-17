@@ -12,8 +12,8 @@ const worldCenter = crossy_Game.Mesh.CreateAxesHelper(5);
 worldCenter.name = "worldCenter";
 worldCenter.position.set(0, 0, 0);
 
-const marcadorSalto = crossy_Game.Mesh.CreateAxesHelper(3)
-marcadorSalto.position.set(0, 0, -3.5)
+/*const marcadorSalto = crossy_Game.Mesh.CreateAxesHelper(3)
+marcadorSalto.position.set(0, 0, -3.5)*/
 
 const grid = crossy_Game.Mesh.CreateGridHelper(100, 100);
 
@@ -23,7 +23,7 @@ crossy_Game.camera.instance.position.set(200,203, 200);
 crossy_Game.camera.instance.rotation.order = 'YXZ';
 crossy_Game.camera.instance.rotation.y = Math.PI / 4;
 crossy_Game.camera.instance.rotation.x = Math.atan(-1 / Math.sqrt(2));  
-crossy_Game.camera.instance.zoom = 25
+crossy_Game.camera.instance.zoom = 15
 crossy_Game.camera.instance.updateProjectionMatrix()
 
 const ambientLight = crossy_Game.Light.CreateAmbientLight();
@@ -72,10 +72,9 @@ gltfLoader.load(
      (gltf) => {
         console.log('success loading Wizard')
         //console.log(gltf)
-        gltf.scene.scale.set(1, 1, 1)
+        gltf.scene.scale.set(1, 1.2, 1)
         gltf.scene.rotation.y = -Math.PI / 1
-        //gltf.scene.position.set(0, 0.2, 0)
-        gltf.scene.position.copy(Wizard.rigidbody.position)
+        gltf.scene.position.set(0, 0.2, 0)
         Wizard = gltf.scene
         crossy_Game.scene.add(Wizard) 
     })
@@ -85,6 +84,27 @@ gltfLoader.load(
 // ROAD
 
 let road = crossy_Game.createObject('Road')
+
+crossy_Game.addComponentToObject(
+    road,
+    'rigidbody',
+    crossy_Game.Physics.CreateBody({
+        mass: 0,
+        shape: new CANNON.Box(new CANNON.Vec3(20, 0.01, 2))
+    })
+)
+
+gltfLoader.load(
+    'Models/Road/Road.gltf',
+    (gltf) => {
+        console.log('success loading Road')
+        //console.log(gltf)
+        gltf.scene.scale.set(1, 1, 1)
+        gltf.scene.rotation.y = Math.PI / 2
+        gltf.scene.position.set(0, -0.15, -4)
+        road = gltf.scene
+        crossy_Game.scene.add(road)
+    })
 
 // COIN
 let coin = crossy_Game.createObject('Coin')
@@ -104,7 +124,7 @@ gltfLoader.load(
         console.log('success loading coin')
         //console.log(gltf)
         gltf.scene.scale.set(1, 1, 1)
-        gltf.scene.position.set(0, 0.2, -7)
+        gltf.scene.position.set(0, 0.2, -8)
         coin = gltf.scene
         crossy_Game.scene.add(coin)
     })
@@ -147,7 +167,7 @@ let stopSign = crossy_Game.createObject('StopSign')
 
 //------------------------------------------------>> ANIMACIONES
 
-let movW = gsap.to(coin.rigidbody.position,
+let movW = gsap.to(Wizard.rigidbody.position,
      {duration: 0.5,
          x: 0,
          y: 0,
@@ -169,36 +189,26 @@ crossy_Game.addComponentToObject(
     floor,
     'mesh',
     crossy_Game.Mesh.CreateFromGeometry(
-        new THREE.BoxGeometry(20, 0.01, 2),
+        new THREE.BoxGeometry(1000, 0.01, 2),
         new THREE.MeshStandardMaterial({color: 'green'})
     ),
     
 )
 floor.mesh.position.set(0, 0, 0)
 
-const floor2 = crossy_Game.createObject
-crossy_Game.addComponentToObject(
-    floor,
-    'mesh',
-    crossy_Game.Mesh.CreateFromGeometry(
-        new THREE.BoxGeometry(20, 0.01, 5),
-        new THREE.MeshStandardMaterial({color: 'gray'})
-    ),
-    
-)
-floor2.mesh.position.set(0, 0, -3.5)
+
 
 const floor3 = crossy_Game.createObject
 crossy_Game.addComponentToObject(
     floor,
     'mesh',
     crossy_Game.Mesh.CreateFromGeometry(
-        new THREE.BoxGeometry(20, 0.01, 2),
+        new THREE.BoxGeometry(100, 0.01, 2),
         new THREE.MeshStandardMaterial({color: 'green'})
     ),
     
 )
-floor3.mesh.position.set(0, 0, -7)
+floor3.mesh.position.set(0, 0, -8)
 
 // SPAWNEAR CHICKEN EN START
 
@@ -238,9 +248,10 @@ for(let obj of objects) {
 crossy_Game.update = (dt) => {
 
 //------------------------------------------------>> ANIMACIONES UPDATE
-        if (crossy_Game.input.isKeyPressed('KeyW')) {
+    if (crossy_Game.input.isKeyPressed('KeyW')) {
         movW.invalidate();
         movW.restart();
+        console.log('Final position is: ', Wizard.position.z);
     }
 }
 

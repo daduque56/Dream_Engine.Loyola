@@ -54,7 +54,7 @@ let animAdelante = gsap.to(cube.position,
      {duration: 0.5,
          x: 0,
          y: 0,
-         z: "-=2.8",
+         z: "-=3.5",
          paused: true
         }
 );
