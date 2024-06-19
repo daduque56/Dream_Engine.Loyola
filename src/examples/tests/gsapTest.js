@@ -2,12 +2,17 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import Dream_Engine from '../../dream_Engine/Dream_Engine'
 import * as CANNON from 'cannon-es'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const dream = new Dream_Engine();
 
 const worldCenter = dream.Mesh.CreateAxesHelper(3);
 worldCenter.name = "worldCenter";
 worldCenter.position.set(0, 0, 0); 
+
+dream.Physics.world.gravity.set(0, -9.81, 0)
+
+const gltfLoader = new GLTFLoader();
 
 //------------------------------------------------>> CAMARA Y LUCES
 
@@ -26,81 +31,147 @@ directionalLight.position.set(5, 3, 3);
 const ground = dream.Mesh.CreateGridHelper();
 
 const animationPointStart = dream.Mesh.CreateAxesHelper(3);
-animationPointStart.position.set(0, 0, -3.5);
+animationPointStart.position.set(0, 0, -3);
 
-let geometry = new THREE.BoxGeometry(1, 1, 1);
-let material = new THREE.MeshStandardMaterial({color: 'Red'});
-let cube = new THREE.Mesh(geometry, material);
+const animationPointEnd = dream.Mesh.CreateAxesHelper(3);
+animationPointEnd.position.set(0, 0, 3);
 
-cube.position.set(0, 0.5, 0);
+// Dimensiones del RigidBody deL Wizard
+let WizBox = new CANNON.Vec3(1.5, 3, 1);
 
+// Objeto que controla el movimiento con animación gsap
+let cube = dream.createObject('cube');
 dream.scene.add(cube);
 
-let cubo = dream.createObject('cubo');
+// Crear objeto Wiz para registar el Rigidbody del Wizard
+let Wiz = dream.createObject('Wiz');
 dream.addComponentToObject(
-    cubo,
-    'Mesh',
+    Wiz,
+    'mesh',
     dream.Mesh.CreateFromGeometry(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshStandardMaterial({color: 'green'})
+        new THREE.BoxGeometry(WizBox.x, WizBox.y, WizBox.z),
+        new THREE.MeshBasicMaterial({ color: 'green', wireframe: true, transparent: true, opacity: 0.7})
     )
 )
 dream.addComponentToObject(
-    cubo,
+    Wiz,
     'rigidbody',
     dream.Physics.CreateBody({
-        mass: 2,
-        shape: new CANNON.Box(new CANNON.Vec3(0.45, 0.4, 0.45))
-    }) 
+        mass: 0,
+        shape: new CANNON.Box(WizBox),
+    })
 )
-dream.rigidbody.position.set(0, 4, 0)
-/*const animAdelante = gsap.timeline({ repeat: 3});
+Wiz.rigidbody.position.set(0, 1.75, 0);
 
-    animAdelante.fromTo(cube.position,
-        {delay:0,
-        duration:0.125,
-        x: (cube.position.x),
-        y: (cube.position.y),
-        z: (cube.position.z)},
-        {delay:0,
-        duration:1,
-        x: (cube.position.x),
-        y: (cube.position.y),
-        z: (cube.position.z - 3.5)}
-    );
-animAdelante.endTime(1)*/
+cube.position.set(0, 0, 0);
 
-let animAdelante = gsap.to(cube.position,
-     {duration: 0.5,
-         x: 0,
-         y: 0,
-         z: "-=1",
-         ease: "back.inOut(1.7)",
-         paused: true
-        }
-);
+let Wizard = null
 
-let animAtras = gsap.to(cube.position,
-    {duration: 0.5,
-        x: 0,
-        y: 0,
-        z: "+=1",
-        ease: "back.inOut(1.7)",
-        paused: true
-    }
-);  
+gltfLoader.load(
+    '/Models/Wizard/Wizard.gltf',
+     (gltf) => {
+        console.log('success loading Wizard')
+        //console.log(gltf)
+        gltf.scene.scale.set(1, 1.2, 1)
+        gltf.scene.rotation.y = Math.PI / 2
+        gltf.scene.position.set(0, 0.2, 0)
+        Wizard = gltf.scene
+        dream.scene.add(Wizard) 
+})
+// ---------------------------->> COPCAR 
+let copCar = null;
+let copCarCube = dream.createObject('copCarCube');
+let copCarBox = new CANNON.Vec3(0.5, 5, 0.5);
+
+gltfLoader.load(
+    'Models/PoliceCar/PoliceCar.gltf',
+    (gltf) => {
+        console.log('success loading PoliceCar')
+        //console.log(gltf)
+        gltf.scene.scale.set(1.5, 1.2, 1.2)
+        gltf.scene.position.set(-15, -0.2, -3.5)
+        gltf.scene.rotation.y = Math.PI / 2
+        copCar = gltf.scene
+        dream.scene.add(copCar)
+    })
+
+dream.addComponentToObject(
+    copCarCube,
+    'mesh',
+    dream.Mesh.CreateFromGeometry(
+        new THREE.BoxGeometry(copCarBox.x, copCarBox.y, copCarBox.z),
+        new THREE.MeshBasicMaterial({ color: 'red', wireframe: true, transparent: true, opacity: 0.7})
+    )
+)
+dream.addComponentToObject(
+    copCarCube,
+    'rigidbody',
+    dream.Physics.CreateBody({
+        mass: 0,
+        shape: new CANNON.Box(copCarBox),
+    })
+)
+
+//console.log('Wizard pos: '+ Wizard.position +" // Cube pos: "+ cube.position);
+
 
 dream.update = (dt) => {
+
+    let animAdelante = gsap.to(cube.position,
+        {duration: 0.25,
+            x: 0,
+            y: 0,
+            z: "-=3",
+            ease: "back.inOut(1.7)",
+            paused: true
+        }, 
+    );
+    let animAdelanteBox = gsap.to(Wiz.rigidbody.position,
+        {duration: 0.25,
+            x: 0,
+            y: Wiz.rigidbody.position.y,
+            z: "-=3",
+            ease: "back.inOut(1.7)",
+            paused: true
+        },     
+    );
+    let animAtras = gsap.to(cube.position,
+        {duration: 0.25,
+            x: 0,
+            y: 0,
+            z: "+=3",
+            ease: "back.inOut(1.7)",
+            paused: true
+        }
+    ); 
+    let animAtrasBox = gsap.to(Wiz.rigidbody.position,
+        {duration: 0.25,
+            x: 0,
+            y: Wiz.rigidbody.position.y,
+            z: "+=3",
+            ease: "back.inOut(1.7)",
+            paused: true
+        }
+    ); 
+
     if (dream.input.isKeyPressed('KeyW')) {
         animAdelante.invalidate();
+        animAdelanteBox.invalidate();
         animAdelante.restart();
-        console.log('Finala position is: ', cube.position.z);
+        animAdelanteBox.restart();
     }
     if (dream.input.isKeyPressed('KeyS')) {
         animAtras.invalidate();
+        animAtrasBox.invalidate();
         animAtras.restart();
-        console.log('Finala position is: ', cube.position.z);
+        animAtrasBox.restart();
     }
+    Wizard.position.z = cube.position.z;
+    //copCar.position.x += dt * 3;
+
+/*Wizard.position.z -= dt * 0.5;
+console.log(Wizard.position.z);*/
+
 }
 
 dream.start()
