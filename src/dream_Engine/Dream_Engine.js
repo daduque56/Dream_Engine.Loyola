@@ -114,12 +114,13 @@ class Dream_Engine {
             }
         }
     }
-    createObject(name) {
+    createObject(name = "") {
         let object = new THREE.Object3D()
-        object.name = name
+        if ( name !== '' ) object.name = name
         this.logger.info(
-            'Created object' + object.name + '#' + object.id
+            'Created object ' + object.name + ' #' + object.id
         )
+        this.logger.info('Created object ' + object.name + ' #' + object.id)
         this.objects.push(object)
         return object
     }
@@ -134,6 +135,9 @@ class Dream_Engine {
     addComponentToObject(object, componentName, data){
         data.objectID = object.id
         object [ componentName ] = data
+        this.logger.info(
+            'Added component ' + componentName + ' to object ' + object.name + ' #' + object.id
+        )
     }
     destroyObject(object){
         const index = this.objects.indexOf(object);
@@ -143,6 +147,7 @@ class Dream_Engine {
 
         this.objectsToBeDestroyed.push(object)
     }
+
   
 }
 
