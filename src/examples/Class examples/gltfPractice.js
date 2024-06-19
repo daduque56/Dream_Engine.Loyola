@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import * as CANNON from 'cannon-es'
 import Dream_Engine from '../../dream_Engine/Dream_Engine';
+import gsap from 'gsap'
 
 const dream = new Dream_Engine();
 dream.Physics.world.gravity.set(0, -9.81, 0)
@@ -92,7 +93,7 @@ gltfLoader.load(
         console.log('success')
         console.log(gltf)
         gltf.scene.scale.set(3, 3, 3)
-        steve = gltf.scene
+        steve.add(gltf.scene)
         dream.scene.add(gltf.scene)
     }
 )
@@ -106,21 +107,30 @@ dream.addComponentToObject(
     }) 
 )
 
-let coin = dream.createObject('coin')
 
-gltfLoader.load(
-    '/Models/coin.gltf/scene.gltf',
-    (gltf) => {
-        console.log('success')
-        console.log(gltf)
-        gltf.scene.scale.set(3, 3, 3)
-        coin = gltf.scene
-        dream.scene.add(gltf.scene)
-    }
-)
 
 
 let isJumping = false;
+
+let animAdelante = gsap.to(steve.gltf.position,
+     {duration: 0.5,
+         x: 0,
+         y: 0,
+         z: "-=1",
+         ease: "back.inOut(1.7)",
+         paused: true
+        }
+);
+
+let animAtras = gsap.to(steve.gltf.position,
+    {duration: 0.5,
+        x: 0,
+        y: 0,
+        z: "+=1",
+        ease: "back.inOut(1.7)",
+        paused: true
+    }
+);  
 
 
 dream.update = (dt) => {
@@ -129,11 +139,15 @@ dream.update = (dt) => {
 
     //steve.rotation.y += dt * 0.5;
     if (dream.input.isKeyPressed('KeyW') || dream.input.isKeyPressed('ArrowUp')) {
-        steve.position.z -= 0.1
-        cubo.mesh.position.z -= 0.1
+        //steve.position.z -= 0.1
+        //cubo.mesh.position.z -= 0.1
+        animAdelante.invalidate();
+        animAdelante.restart();
     }
     if (dream.input.isKeyPressed('KeyS')|| dream.input.isKeyPressed('ArrowDown')) {
-        steve.position.z += 0.1
+        //steve.position.z += 0.1
+        animAtras.invalidate();
+        animAtras.restart();
     } 
     if (dream.input.isKeyPressed('KeyA') || dream.input.isKeyPressed('ArrowLeft')) {
        steve.position.x -= 0.1
