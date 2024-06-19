@@ -58,14 +58,14 @@ const gltfLoader = new GLTFLoader()
 // WIZARD
 let Wizard = crossy_Game.createObject('Wizard')
 
-crossy_Game.addComponentToObject(
+/*crossy_Game.addComponentToObject(
     Wizard,
     'rigidbody',
     crossy_Game.Physics.CreateBody({
         mass: 0,
         shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1))
     })
-)
+)*/
 
 gltfLoader.load(
     '/Models/Wizard/Wizard.gltf',
@@ -167,7 +167,7 @@ let stopSign = crossy_Game.createObject('StopSign')
 
 //------------------------------------------------>> ANIMACIONES
 
-let movW = gsap.to(Wizard.rigidbody.position,
+let movW = gsap.to(Wizard.position.z,
      {duration: 0.5,
          x: 0,
          y: 0,
@@ -189,18 +189,25 @@ crossy_Game.addComponentToObject(
     floor,
     'mesh',
     crossy_Game.Mesh.CreateFromGeometry(
-        new THREE.BoxGeometry(1000, 0.01, 2),
-        new THREE.MeshStandardMaterial({color: 'green'})
+        new THREE.BoxGeometry(100, 0.01, 2),
+        new THREE.MeshStandardMaterial({color: 'red'})
     ),
     
 )
+/crossy_Game.addComponentToObject(
+    floor,
+    'rigidbody',
+    crossy_Game.Physics.CreateBody({
+        mass: 5,
+        shape: new CANNON.Box(new CANNON.Vec3(100, 0.01, 2))
+    })
+)
+console.log(floor.rigidbody)
 floor.mesh.position.set(0, 0, 0)
-
-
 
 const floor3 = crossy_Game.createObject
 crossy_Game.addComponentToObject(
-    floor,
+    floor3,
     'mesh',
     crossy_Game.Mesh.CreateFromGeometry(
         new THREE.BoxGeometry(100, 0.01, 2),
@@ -210,7 +217,7 @@ crossy_Game.addComponentToObject(
 )
 floor3.mesh.position.set(0, 0, -8)
 
-// SPAWNEAR CHICKEN EN START
+// SPAWNEAR WIZARD EN START
 
 // START GAME
 
@@ -232,11 +239,11 @@ floor3.mesh.position.set(0, 0, -8)
 
 //------------------------------------------------>> EVENTOS
 
-// CHICKEN ATROPALLADO POR CARRO 
+// WIZARD ATROPALLADO POR CARRO 
 
-// CHICKEN CAE AL AGUA 
+// WIZARD CAE AL AGUA 
 
-// CHICKEN RECOGE MONEDA
+// WIZARD RECOGE MONEDA
 
 //------------------------------------------------>> UPDATE Y START
 
@@ -246,6 +253,8 @@ for(let obj of objects) {
 }
 
 crossy_Game.update = (dt) => {
+
+    //Wizard.position.z -= 0.01
 
 //------------------------------------------------>> ANIMACIONES UPDATE
     if (crossy_Game.input.isKeyPressed('KeyW')) {
