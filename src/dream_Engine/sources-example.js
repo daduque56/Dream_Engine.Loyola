@@ -20,4 +20,10 @@ export default
     type: 'gltfModel',
     path: '/Models/FlightHelmet/glTF/FlightHelmet.gltf'
     }
+    ,
+    {
+    name: 'WizardModel',
+    type: 'gltfModel',
+    path: '/Models/Wizard/Wizard.gltf'
+    }
 ]
