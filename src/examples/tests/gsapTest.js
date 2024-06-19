@@ -78,10 +78,15 @@ gltfLoader.load(
         Wizard = gltf.scene
         dream.scene.add(Wizard) 
 })
-// ---------------------------->> COPCAR 
+
+// ----------------------------------------------------------------->> COPCAR 
+
+// Modelo de la copCar
 let copCar = null;
+// Crear objeto copCarCube para registar el Rigidbody del copCar
 let copCarCube = dream.createObject('copCarCube');
-let copCarBox = new CANNON.Vec3(0.5, 5, 0.5);
+dream.scene.add(copCarCube);
+let copCarBox = new CANNON.Vec3(6, 1.5, 3.5);
 
 gltfLoader.load(
     'Models/PoliceCar/PoliceCar.gltf',
@@ -100,7 +105,7 @@ dream.addComponentToObject(
     'mesh',
     dream.Mesh.CreateFromGeometry(
         new THREE.BoxGeometry(copCarBox.x, copCarBox.y, copCarBox.z),
-        new THREE.MeshBasicMaterial({ color: 'red', wireframe: true, transparent: true, opacity: 0.7})
+        new THREE.MeshBasicMaterial({ color: 'red', wireframe: true, transparent: true, opacity: 0.6})
     )
 )
 dream.addComponentToObject(
@@ -111,6 +116,7 @@ dream.addComponentToObject(
         shape: new CANNON.Box(copCarBox),
     })
 )
+copCarCube.rigidbody.position.set(-15, 1, -3.5);
 
 //console.log('Wizard pos: '+ Wizard.position +" // Cube pos: "+ cube.position);
 
@@ -167,7 +173,8 @@ dream.update = (dt) => {
         animAtrasBox.restart();
     }
     Wizard.position.z = cube.position.z;
-    //copCar.position.x += dt * 3;
+    copCar.position.x = copCarCube.rigidbody.position.x;
+    //copCarCube.rigidbody.position.x += dt * 3;
 
 /*Wizard.position.z -= dt * 0.5;
 console.log(Wizard.position.z);*/
