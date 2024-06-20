@@ -145,8 +145,6 @@ dream.update = (dt) => {
 
     let animAdelante = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
-            x: 0,
-            y: Wiz.rigidbody.position.y,
             z: "-=3",
             ease: "back.inOut(1.7)",
             paused: true
@@ -154,8 +152,6 @@ dream.update = (dt) => {
     );
     let animAtras = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
-            x: 0,
-            y: Wiz.rigidbody.position.y,
             z: "+=3",
             ease: "back.inOut(1.7)",
             paused: true
@@ -164,8 +160,6 @@ dream.update = (dt) => {
     let animDerecha = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
             x: "+=3",
-            y: Wiz.rigidbody.position.y,
-            z: 0,
             ease: "back.inOut(1.7)",
             paused: true
         }
@@ -173,15 +167,10 @@ dream.update = (dt) => {
     let animIzquierda = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
             x: "-=3",
-            y: Wiz.rigidbody.position.y,
-            z: 0,
             ease: "back.inOut(1.7)",
             paused: true
         }
     );
-
-    
-
     if (dream.input.isKeyPressed('KeyW')) {
         animAdelante.invalidate();
         animAdelante.restart();
