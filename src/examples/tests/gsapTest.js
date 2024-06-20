@@ -20,7 +20,7 @@ dream.camera.instance.position.set(200,203, 200);
 dream.camera.instance.rotation.order = 'YXZ';
 dream.camera.instance.rotation.y = Math.PI / 4;
 dream.camera.instance.rotation.x = Math.atan(-1 / Math.sqrt(2));  
-dream.camera.instance.zoom = 20
+dream.camera.instance.zoom = 10
 dream.camera.instance.updateProjectionMatrix()
 dream.Physics.world.gravity.set(0, -9.81, 0)
 
@@ -36,7 +36,51 @@ animationPointStart.position.set(0, 0, -3);
 
 const animationPointEnd = dream.Mesh.CreateAxesHelper(3);
 animationPointEnd.position.set(0, 0, 3);
+// ----------------------------------------------------------------->> CREATE VEHICLES FUNCTIONS
 
+function createVehicle(name, modelPath, scale, rotation, geometry, material, physics, position) {
+    let object3D = null;
+    let objectCube = dream.createObject(name);
+    dream.scene.add(objectCube);
+
+    gltfLoader.load(
+        modelPath,
+        (gltf) => {
+            console.log(`success loading ${name}`);
+            gltf.scene.scale.set(...scale);
+            gltf.scene.rotation.y = rotation;
+            object3D = gltf.scene;
+            dream.scene.add(object3D);
+        }
+    );
+    dream.addComponentToObject(
+        objectCube,
+        'mesh',
+        dream.Mesh.CreateFromGeometry(
+            new THREE.BoxGeometry(...geometry),
+            new THREE.MeshBasicMaterial(material)
+        )
+    );
+    dream.addComponentToObject(
+        objectCube,
+        'rigidbody',
+        dream.Physics.CreateBody(physics)
+    );
+    objectCube.rigidbody.position.set(...position);
+
+    function updatePosition() {
+        if (object3D && objectCube.rigidbody) {
+            object3D.position.copy(objectCube.rigidbody.position);
+            object3D.position.y -= 1;
+        }
+        requestAnimationFrame(updatePosition);
+    }
+
+    updatePosition();
+
+    return { object3D, objectCube };
+}
+// ----------------------------------------------------------------->> WIZARD
 // Dimensiones del RigidBody deL Wizard
 let WizBox = new CANNON.Vec3(1, 1, 1);
 
@@ -112,7 +156,57 @@ dream.addComponentToObject(
         shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 1)),
     })
 )
-copCarCube.rigidbody.position.set(-10, 0.8, 0);
+copCarCube.rigidbody.position.set(-10, 0.8, 15);
+
+// ----------------------------------------------------------------->> COPCAR 
+
+let Taxi = null
+let TaxiCube = dream.createObject('TaxiCube');
+dream.scene.add(TaxiCube);
+
+gltfLoader.load(
+    'Models/Taxi/Taxi.gltf',
+    (gltf) => {
+        console.log('success loading Taxi')
+        //console.log(gltf)
+        gltf.scene.scale.set(1.5, 1.2, 1.2)
+        gltf.scene.rotation.y = Math.PI / 2
+        Taxi = gltf.scene
+        dream.scene.add(Taxi)
+    })
+// Rb Mesh
+dream.addComponentToObject(
+    TaxiCube,
+    'mesh',
+    dream.Mesh.CreateFromGeometry(
+        new THREE.BoxGeometry(5.5, 1.5, 3),
+        new THREE.MeshBasicMaterial({ color: 'yellow', wireframe: true, transparent: true, opacity: 0.6})
+    )
+)
+// Rb Physics
+dream.addComponentToObject(
+    TaxiCube,
+    'rigidbody',
+    dream.Physics.CreateBody({
+        mass: 0,
+        shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 1)),
+    })
+)
+TaxiCube.rigidbody.position.set(-10, 0.8, -15);
+
+// ----------------------------------------------------------------->> HATCHBACK CAR
+
+let { hatchBack, hatchBackCube } = createVehicle(
+    'hatchBack',
+    'Models/HatchBack/HatchBack.gltf',
+    [1.5, 1.2, 1.2],
+    Math.PI / 2,
+    [5.5, 1.5, 3],
+    { color: 'blue', wireframe: true, transparent: true, opacity: 0.6 },
+    { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 1)) },
+    [10, 0.8, 0]
+);
+dream.scene.add(hatchBack);
 
 // ----------------------------------------------------------------->> PHYSICS TESTS
 let floorBox = new CANNON.Vec3(10, 0.1, 10);
@@ -196,7 +290,18 @@ dream.update = (dt) => {
     copCar.position.copy(copCarCube.rigidbody.position)
     copCar.position.y -= 1;
 
+    //moveObject(copCar, copCarCube);
+
+    Taxi.position.copy(TaxiCube.rigidbody.position) 
+    Taxi.position.y -= 1;
+    
+
+    //moveObject(Taxi, TaxiCube);
+
+    //moveObject(hatchBack, hacthBackCube);
+
     //copCarCube.rigidbody.position.x += dt * 3;
+    //TaxiCube.rigidbody.position.x += dt * 3;a
 
 }
 
