@@ -159,14 +159,14 @@ dream.update = (dt) => {
     );
     let animDerecha = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
-            x: "+=3",
+            x: "+=3.0",
             ease: "back.inOut(1.7)",
             paused: true
         }
     );
     let animIzquierda = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
-            x: "-=3",
+            x: "-=3.0",
             ease: "back.inOut(1.7)",
             paused: true
         }
