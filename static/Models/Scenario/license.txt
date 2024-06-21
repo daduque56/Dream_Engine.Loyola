@@ -1,0 +1,11 @@
+Model Information:
+* title:	Crossy Road 3D SCENE.dae
+* source:	https://sketchfab.com/3d-models/crossy-road-3d-scenedae-4bfc62b3f4b64756bbbb9d3681402327
+* author:	ROMANProJects (https://sketchfab.com/ROMANCnS)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Crossy Road 3D SCENE.dae" (https://sketchfab.com/3d-models/crossy-road-3d-scenedae-4bfc62b3f4b64756bbbb9d3681402327) by ROMANProJects (https://sketchfab.com/ROMANCnS) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
