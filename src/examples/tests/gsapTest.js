@@ -16,7 +16,7 @@ const gltfLoader = new GLTFLoader();
 
 //------------------------------------------------>> CAMARA Y LUCES
 
-dream.camera.instance.position.set(200,203, 200);
+dream.camera.instance.position.set(205,203, 180);
 dream.camera.instance.rotation.order = 'YXZ';
 dream.camera.instance.rotation.y = Math.PI / 4;
 dream.camera.instance.rotation.x = Math.atan(-1 / Math.sqrt(2));  
@@ -36,9 +36,209 @@ animationPointStart.position.set(0, 0, -3);
 
 const animationPointEnd = dream.Mesh.CreateAxesHelper(3);
 animationPointEnd.position.set(0, 0, 3);
-// ----------------------------------------------------------------->> CREATE VEHICLES FUNCTIONS
 
-function createVehicle(name, modelPath, scale, rotation, geometry, material, physics, position) {
+// ----------------------------------------------------------------->> FUNCIONES
+/* INTENTO DE CREACIÓN DE MODELOS CON ARRAY DE PARAMETROS 
+// Parametros de los vehiculos
+const vehicleParams = [
+  {
+    name: 'ambulance',
+    modelPath: 'Models/Ambulance/Ambulance.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [7, 1.5, 4],
+    material: { color: 'purple', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(4, 1, 3)) }
+  },
+  {
+    name: 'policeCar',
+    modelPath: 'Models/PoliceCar/PoliceCar.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'blue', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) }
+  },
+  {
+    name: 'fireTruck',
+    modelPath: 'Models/FireTruck/FireTruck.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [7, 1.5, 4],
+    material: { color: 'red', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(4, 1, 3)) }
+  },
+  {
+    name: 'Taxi',
+    modelPath: 'Models/Taxi/Taxi.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'yellow', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) }
+  },
+  {
+    name: 'hatchBack',
+    modelPath: 'Models/HatchBack/HatchBack.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'gray', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) }
+  }
+]
+// Obtener parametros de vehiculo por nombre
+function getVehicleParamsByName(name) {
+  return vehicleParams.find(params => params.name === name)
+}
+function createModel(params, position) {
+    let object3D = null;
+    let objectCube = dream.createObject(params.name);
+    dream.scene.add(objectCube);
+
+    gltfLoader.load(
+        params.modelPath,
+        (gltf) => {
+            console.log(`success loading ${params.name}`);
+            gltf.scene.scale.set(...params.scale);
+            gltf.scene.rotation.y = params.rotation;
+            object3D = gltf.scene;
+            dream.scene.add(object3D);
+        }
+    );
+    dream.addComponentToObject(
+        objectCube,
+        'mesh',
+        dream.Mesh.CreateFromGeometry(
+            new THREE.BoxGeometry(...params.geometry),
+            new THREE.MeshBasicMaterial(params.material)
+        )
+    );
+    dream.addComponentToObject(
+        objectCube,
+        'rigidbody',
+        dream.Physics.CreateBody(params.physics)
+    );
+    objectCube.rigidbody.position.set(...position);
+
+    function updatePosition() {
+        if (object3D && objectCube.rigidbody) {
+            object3D.position.copy(objectCube.rigidbody.position);
+            object3D.position.y -= 1;
+        }
+        requestAnimationFrame(updatePosition);
+    }
+
+    updatePosition();
+
+    return objectCube;
+}
+
+*/
+
+const Modelos = [
+  {
+    name: 'ambulance',
+    modelPath: 'Models/Ambulance/Ambulance.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [7, 1.5, 4],
+    material: { color: 'purple', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(4, 1, 2)) }
+  },
+  {
+    name: 'policeCar',
+    modelPath: 'Models/PoliceCar/PoliceCar.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'blue', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) }
+  },
+  {
+    name: 'fireTruck',
+    modelPath: 'Models/FireTruck/FireTruck.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [7, 1.5, 4],
+    material: { color: 'red', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(4, 1, 2)) }
+  },
+  {
+    name: 'Taxi',
+    modelPath: 'Models/Taxi/Taxi.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'yellow', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) }
+  },
+  {
+    name: 'hatchBack',
+    modelPath: 'Models/HatchBack/HatchBack.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'gray', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) }
+  },
+  {
+    name: 'wizard',
+    modelPath: 'Models/Wizard/Wizard.gltf',
+    scale: [1, 1.2, 1],
+    rotation: Math.PI / 2,
+    geometry: [1, 3.5, 1],
+    material: { color: 'green', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 1, shape: new CANNON.Box(new CANNON.Vec3(1, 3.5, 1)) }
+  },
+  {
+    name: 'road',
+    modelPath: 'Models/Road/Road.gltf',
+    scale: [1, 1, 1],
+    rotation: Math.PI / 2,
+    geometry: [20, 0.01, 2],
+    material: { color: 'gray', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(20, 0.01, 2)) }
+  },
+  {
+    name: 'train',
+    modelPath: 'Models/Train/Train.gltf',
+    scale: [1, 1, 1],
+    rotation: 0,
+    geometry: [1, 1, 3],
+    material: { color: 'gray', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(1, 1, 3)) }
+  },
+  {
+    name: 'log',
+    modelPath: 'Models/Log/Log.gltf',
+    scale: [1, 1, 1],
+    rotation: 0,
+    geometry: [1, 1, 3],
+    material: { color: 'brown', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(1, 1, 3)) }
+  },
+  {
+    name: 'coin',
+    modelPath: 'Models/Coin/Coin.gltf',
+    scale: [1, 1, 1],
+    rotation: Math.PI / 2,
+    geometry: [1, 0.3, 1],
+    material: { color: 'yellow', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(1, 0.3, 1)) }
+  },
+  {
+    name: 'scenario',
+    modelPath: 'Models/Scenario/Scenario.gltf',
+    scale: [1, 1, 1],
+    rotation: Math.PI / 2,
+    geometry: [100, 0.01, 100],
+    material: { color: 'green', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(100, 0.01, 100)) }
+  }
+]
+// Función para crear un objeto 3D con un RigidBody y un modelo GLTF
+function createModel(name, modelPath, scale, rotation, geometry, material, physics, position, shouldMoveForward ) {
     let object3D = null;
     let objectCube = dream.createObject(name);
     dream.scene.add(objectCube);
@@ -75,12 +275,44 @@ function createVehicle(name, modelPath, scale, rotation, geometry, material, phy
         }
         requestAnimationFrame(updatePosition);
     }
-
     updatePosition();
 
-    return { object3D, objectCube };
+        if (shouldMoveForward) {
+        objectCube.rigidbody.velocity.x = speed;
+    }
+
+    return objectCube;
 }
+// Spawner function
+function spawner(createModelFunc, modelParamsArray, spawnInterval, spawnPosition, maxCount) {
+    let count = 0;
+
+    let intervalId = setInterval(() => {
+        if (count >= maxCount) {
+            clearInterval(intervalId); // Stop spawning when maxCount is reached
+            return;
+        }
+
+        // Select a random model from the first 5 models in the modelParamsArray
+        let modelParams = modelParamsArray[Math.floor(Math.random() * 5)];
+
+        createModelFunc(
+            modelParams.name,
+            modelParams.modelPath,
+            modelParams.scale,
+            modelParams.rotation,
+            modelParams.geometry,
+            modelParams.material,
+            modelParams.physics,
+            spawnPosition
+        );
+
+        count++;
+    }, spawnInterval);
+}
+
 // ----------------------------------------------------------------->> WIZARD
+
 // Dimensiones del RigidBody deL Wizard
 let WizBox = new CANNON.Vec3(1, 1, 1);
 
@@ -91,7 +323,7 @@ dream.addComponentToObject(
     'mesh',
     dream.Mesh.CreateFromGeometry(
         new THREE.BoxGeometry(1, 3.5, 1),
-        new THREE.MeshBasicMaterial({ color: 'green', wireframe: true, transparent: true, opacity: 0.7})
+        new THREE.MeshBasicMaterial({ color: 'green', wireframe: true, transparent: true, opacity: 0.9})
     )
 )
 dream.addComponentToObject(
@@ -121,93 +353,51 @@ gltfLoader.load(
 
 Wiz.rigidbody.position.set(0, 5, 0);
 
-// ----------------------------------------------------------------->> COPCAR 
 
-// Modelo de la copCar
-let copCar = null;
-// Crear objeto copCarCube para registar el Rigidbody del copCar
-let copCarCube = dream.createObject('copCarCube');
-dream.scene.add(copCarCube);
-
-gltfLoader.load(
-    'Models/PoliceCar/PoliceCar.gltf',
-    (gltf) => {
-        console.log('success loading PoliceCar')
-        //console.log(gltf)
-        gltf.scene.scale.set(1.5, 1.2, 1.2)
-        gltf.scene.rotation.y = Math.PI / 2
-        copCar = gltf.scene
-        dream.scene.add(copCar)
-    })
-
-dream.addComponentToObject(
-    copCarCube,
-    'mesh',
-    dream.Mesh.CreateFromGeometry(
-        new THREE.BoxGeometry(5.5, 1.5, 3),
-        new THREE.MeshBasicMaterial({ color: 'red', wireframe: true, transparent: true, opacity: 0.6})
-    )
-)
-dream.addComponentToObject(
-    copCarCube,
-    'rigidbody',
-    dream.Physics.CreateBody({
-        mass: 0,
-        shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 1)),
-    })
-)
-copCarCube.rigidbody.position.set(-10, 0.8, 15);
-
-// ----------------------------------------------------------------->> COPCAR 
-
-let Taxi = null
-let TaxiCube = dream.createObject('TaxiCube');
-dream.scene.add(TaxiCube);
-
-gltfLoader.load(
-    'Models/Taxi/Taxi.gltf',
-    (gltf) => {
-        console.log('success loading Taxi')
-        //console.log(gltf)
-        gltf.scene.scale.set(1.5, 1.2, 1.2)
-        gltf.scene.rotation.y = Math.PI / 2
-        Taxi = gltf.scene
-        dream.scene.add(Taxi)
-    })
-// Rb Mesh
-dream.addComponentToObject(
-    TaxiCube,
-    'mesh',
-    dream.Mesh.CreateFromGeometry(
-        new THREE.BoxGeometry(5.5, 1.5, 3),
-        new THREE.MeshBasicMaterial({ color: 'yellow', wireframe: true, transparent: true, opacity: 0.6})
-    )
-)
-// Rb Physics
-dream.addComponentToObject(
-    TaxiCube,
-    'rigidbody',
-    dream.Physics.CreateBody({
-        mass: 0,
-        shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 1)),
-    })
-)
-TaxiCube.rigidbody.position.set(-10, 0.8, -15);
-
-// ----------------------------------------------------------------->> HATCHBACK CAR
-
-let { hatchBack, hatchBackCube } = createVehicle(
-    'hatchBack',
-    'Models/HatchBack/HatchBack.gltf',
-    [1.5, 1.2, 1.2],
-    Math.PI / 2,
-    [5.5, 1.5, 3],
-    { color: 'blue', wireframe: true, transparent: true, opacity: 0.6 },
-    { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 1)) },
-    [10, 0.8, 0]
-);
-dream.scene.add(hatchBack);
-
+// ----------------------------------------------------------------->> MODELOS 
+                                   
+/* SEGUNDO INTENTO DE SPAWNEAR VEHICULOS FALLIDO
+// Posiciones spawners de los vehiculos
+const spawnerPositions = [
+  [-10, 0.2, -5],
+  [-25, 1.5, -3],
+  [-10, 0.8, 20],
+  // ... other positions
+]
+// Obtener parametros de vehiculo por nombre
+function getVehicleParamsByName(name) {
+  return vehicleParams.find(params => params.name === name)
+}
+// Matriz de vehiculos
+const vehicleMatrix = [
+  { params: getVehicleParamsByName('ambulance'), spawnerIndex: 0 },
+  { params: getVehicleParamsByName('policeCar'), spawnerIndex: 1 },
+  { params: getVehicleParamsByName('fireTruck'), spawnerIndex: 2 },
+  { params: getVehicleParamsByName('Taxi'), spawnerIndex: 3 },
+  { params: getVehicleParamsByName('hatchBack'), spawnerIndex: 4 },
+]
+// Vehiculos con info completa para ser usados
+const ambulance = vehicleMatrix[0]
+const policeCar = vehicleMatrix[1]
+const fireTruck = vehicleMatrix[2]
+const Taxi = vehicleMatrix[3]
+const hatchBack = vehicleMatrix[4]
+// Función para spawnear un vehiculo
+function spawnVehicle(params, spawnerIndex) {
+  const spawnPosition = spawnerPositions[spawnerIndex]
+  const vehicle = createModel(
+    params.name,
+    params.modelPath,
+    params.scale,
+    params.rotation,
+    params.geometry,
+    params.material,
+    params.physics,
+    spawnPosition
+  )
+  dream.scene.add(vehicle)
+}
+*/
 // ----------------------------------------------------------------->> PHYSICS TESTS
 let floorBox = new CANNON.Vec3(10, 0.1, 10);
 
@@ -231,77 +421,157 @@ dream.addComponentToObject(
 floor.rigidbody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
 floor.rigidbody.position.set(0, 0, 0);
 
+// ----------------------------------------------------------------->> ROAD
+
+let ambulance = createModel(
+    Modelos[0].name,
+    Modelos[0].modelPath,
+    Modelos[0].scale,
+    Modelos[0].rotation,
+    Modelos[0].geometry,
+    Modelos[0].material,
+    Modelos[0].physics,
+    [-10, 1.5, -3] // Initial position
+);
+
+let scenario = createModel(
+    Modelos[10].name,
+    Modelos[10].modelPath,
+    Modelos[10].scale,
+    Modelos[10].rotation,
+    Modelos[10].geometry,
+    Modelos[10].material,
+    Modelos[10].physics,
+    [0, 0, 0] // Initial position
+);
+
+
 console.log(dream.objects)
+console.log(dream.camera.instance.position)
 
+let speed = 1;
 
+/*
+let ambulance = createModel(
+    Modelos[0].name,
+    Modelos[0].modelPath,
+    Modelos[0].scale,
+    Modelos[0].rotation,
+    Modelos[0].geometry,
+    Modelos[0].material,
+    Modelos[0].physics,
+    [-25, 1.5, -3] // Initial position
+);
+let policeCar = createModel(
+    Modelos[1].name,
+    Modelos[1].modelPath,
+    Modelos[1].scale,
+    Modelos[1].rotation,
+    Modelos[1].geometry,
+    Modelos[1].material,
+    Modelos[1].physics,
+    [-15, 1.5, -3] // Initial position
+);*/
 
 dream.update = (dt) => {
 
-    let animAdelante = gsap.to(Wiz.rigidbody.position,
+// ---------------------------------------------------------->> Animaciones a actualizar cada loop
+    let WizMovAd = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
             z: "-=3",
             ease: "back.inOut(1.7)",
             paused: true
         },     
     );
-    let animAtras = gsap.to(Wiz.rigidbody.position,
+    let CamMovAd = gsap.to(dream.camera.instance.position,
+        {duration: 0.25,
+            z: "-=3",
+            ease: "back.inOut(1.7)",
+            paused: true
+        }
+    );
+    let WizMovAtras = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
             z: "+=3",
             ease: "back.inOut(1.7)",
             paused: true
         }
     );
-    let animDerecha = gsap.to(Wiz.rigidbody.position,
+    let CamMovAtras = gsap.to(dream.camera.instance.position,
+        {duration: 0.25,
+            z: "+=3",
+            ease: "back.inOut(1.7)",
+            paused: true
+        }
+    );
+    let WizMovDer = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
             x: "+=3.0",
             ease: "back.inOut(1.7)",
             paused: true
         }
     );
-    let animIzquierda = gsap.to(Wiz.rigidbody.position,
+    let CamMovDer = gsap.to(dream.camera.instance.position,
+        {duration: 0.25,
+            x: "+=3.0",
+            ease: "back.inOut(1.7)",
+            paused: true
+        }
+    );
+    let WizMovIzq = gsap.to(Wiz.rigidbody.position,
         {duration: 0.25,
             x: "-=3.0",
             ease: "back.inOut(1.7)",
             paused: true
         }
     );
-    if (dream.input.isKeyPressed('KeyW')) {
-        animAdelante.invalidate();
-        animAdelante.restart();
+    let CamMovIzq = gsap.to(dream.camera.instance.position,
+        {duration: 0.25,
+            x: "-=3.0",
+            ease: "back.inOut(1.7)",
+            paused: true
+        }
+    );
+    //policeCars.rigidbody.position.x += dt * speed;
+    // ---------------------------------------------------------->> Inputs
+
+    if (dream.input.isKeyPressed('KeyW') || dream.input.isKeyPressed('ArrowUp')) {
+        WizMovAd.invalidate();
+        CamMovAd.invalidate();
+        WizMovAd.restart();
+        CamMovAd.restart();
+        
     }
-    if (dream.input.isKeyPressed('KeyS')) {
-        animAtras.invalidate();
-        animAtras.restart();
+    if (dream.input.isKeyPressed('KeyS') || dream.input.isKeyPressed('ArrowDown')) {
+        WizMovAtras.invalidate();
+        CamMovAtras.invalidate();
+        WizMovAtras.restart();
+        CamMovAtras.restart();
     }
-    if (dream.input.isKeyPressed('KeyD')) {
-        animDerecha.invalidate();
-        animDerecha.restart();
+    if (dream.input.isKeyPressed('KeyD') || dream.input.isKeyPressed('ArrowRight')) {
+        WizMovDer.invalidate();
+        CamMovDer.invalidate();
+        WizMovDer.restart();
+        CamMovDer.restart();
     }
-    if (dream.input.isKeyPressed('KeyA')) {
-        animIzquierda.invalidate();
-        animIzquierda.restart();
+    if (dream.input.isKeyPressed('KeyA') || dream.input.isKeyPressed('ArrowLeft')) {
+        WizMovIzq.invalidate();
+        CamMovIzq.invalidate();
+        WizMovIzq.restart();
+        CamMovIzq.restart();
     }
-    
+
+
     Wizard.position.copy(Wiz.rigidbody.position)
     Wizard.position.y -= 1;
     Wizard.quaternion.copy(Wiz.rigidbody.quaternion)
     Wizard.rotation.y = Math.PI
-    
-    copCar.position.copy(copCarCube.rigidbody.position)
-    copCar.position.y -= 1;
 
-    //moveObject(copCar, copCarCube);
+    //ambulance.rigidbody.position.x += dt * speed;
+    //policeCar.rigidbody.position.x += dt * speed;
 
-    Taxi.position.copy(TaxiCube.rigidbody.position) 
-    Taxi.position.y -= 1;
-    
-
-    //moveObject(Taxi, TaxiCube);
-
-    //moveObject(hatchBack, hacthBackCube);
-
-    //copCarCube.rigidbody.position.x += dt * 3;
-    //TaxiCube.rigidbody.position.x += dt * 3;a
+// ----------------------------------------------------------SPAWNER
+//spawner(createModel, Modelos, 4000, [-25, 1.5, -3], 3, true);
 
 }
 
