@@ -15,7 +15,7 @@ worldCenter.position.set(0, 0, 0);
 /*const marcadorSalto = crossy_Game.Mesh.CreateAxesHelper(3)
 marcadorSalto.position.set(0, 0, -3.5)*/
 
-const grid = crossy_Game.Mesh.CreateGridHelper(100, 100);
+const grid = crossy_Game.Mesh.CreateGridHelper(10, 10);
 
 //------------------------------------------------>> CAMARA Y LUCES
 
@@ -23,7 +23,7 @@ crossy_Game.camera.instance.position.set(200,203, 200);
 crossy_Game.camera.instance.rotation.order = 'YXZ';
 crossy_Game.camera.instance.rotation.y = Math.PI / 4;
 crossy_Game.camera.instance.rotation.x = Math.atan(-1 / Math.sqrt(2));  
-crossy_Game.camera.instance.zoom = 15
+crossy_Game.camera.instance.zoom = 10
 crossy_Game.camera.instance.updateProjectionMatrix()
 
 const ambientLight = crossy_Game.Light.CreateAmbientLight();
@@ -180,10 +180,52 @@ let movW = gsap.to(Wizard.position.z,
 
 //------------------------------------------------>> EXTRAS AL SETUP
 
-//------------------------------------------------>> FUNCIONES
+//----------------------------------------------------------------------->> FUNCIONES
 
+// FUNCION SPAWNEAR OBJETOS
+function createModel(name, modelPath, scale, rotation, geometry, material, physics, position) {
+    let object3D = null;
+    let objectCube = crossy_Game.createObject(name);
+    crossy_Game.scene.add(objectCube);
+
+    gltfLoader.load(
+        modelPath,
+        (gltf) => {
+            console.log(`success loading ${name}`);
+            gltf.scene.scale.set(...scale);
+            gltf.scene.rotation.y = rotation;
+            object3D = gltf.scene;
+            crossy_Game.scene.add(object3D);
+        }
+    );
+    crossy_Game.addComponentToObject(
+        objectCube,
+        'mesh',
+        crossy_Game.Mesh.CreateFromGeometry(
+            new THREE.BoxGeometry(...geometry),
+            new THREE.MeshBasicMaterial(material)
+        )
+    );
+    crossy_Game.addComponentToObject(
+        objectCube,
+        'rigidbody',
+        crossy_Game.Physics.CreateBody(physics)
+    );
+    objectCube.rigidbody.position.set(...position);
+
+    function updatePosition() {
+        if (object3D && objectCube.rigidbody) {
+            object3D.position.copy(objectCube.rigidbody.position);
+            object3D.position.y -= 1;
+        }
+        requestAnimationFrame(updatePosition);
+    }
+
+    updatePosition();
+
+    return objectCube;
+}
 // SPAWNEAR ROAD EN START
-
 const floor = crossy_Game.createObject
 crossy_Game.addComponentToObject(
     floor,
@@ -228,6 +270,79 @@ floor3.mesh.position.set(0, 0, -8)
 // SPAWNEAR COINS EN ROAD
 
 // SPAWNEAR CARROS EN ROAD
+
+const vehicleParams = [
+  {
+    name: 'ambulance',
+    modelPath: 'Models/Ambulance/Ambulance.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [7, 1.5, 4],
+    material: { color: 'purple', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(4, 1, 3)) },
+    position: [0, 0, 0]
+  },
+  {
+    name: 'policeCar',
+    modelPath: 'Models/PoliceCar/PoliceCar.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'blue', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) },
+    position: [0, 0, 0]
+  },
+  {
+    name: 'fireTruck',
+    modelPath: 'Models/FireTruck/FireTruck.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [7, 1.5, 4],
+    material: { color: 'red', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(4, 1, 3)) },
+    position: [0, 0, 0]
+  },
+  {
+    name: 'Taxi',
+    modelPath: 'Models/Taxi/Taxi.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'yellow', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) },
+    position: [0, 0, 0]
+  },
+  {
+    name: 'hatchBack',
+    modelPath: 'Models/HatchBack/HatchBack.gltf',
+    scale: [1.5, 1.2, 1.2],
+    rotation: Math.PI / 2,
+    geometry: [5.5, 1.5, 3],
+    material: { color: 'gray', wireframe: true, transparent: true, opacity: 0.6 },
+    physics: { mass: 0, shape: new CANNON.Box(new CANNON.Vec3(2.5, 1, 2)) },
+    position: [0, 0, 0]
+  }
+]
+function spawnVehicle(params, spawnerIndex) {
+  const spawnPosition = spawnerPositions[spawnerIndex]
+  const vehicle = createModel(
+    params.name,
+    params.modelPath,
+    params.scale,
+    params.rotation,
+    params.geometry,
+    params.material,
+    params.physics,
+    spawnPosition
+  )
+  crossy_Game.scene.add(vehicle)
+
+  // Remove the vehicle after 5 seconds
+  setTimeout(() => {
+    crossy_Game.scene.remove(vehicle)
+    crossy_Game.physicsWorld.remove(vehicle.body)
+  }, 5000)
+}
 
 // SPAWNEAR LOGS EN RIVER
 
